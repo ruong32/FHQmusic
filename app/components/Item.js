@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, Keyboard } from 'react-native';
-import styles from '../../styles/Home/Item';
+import styles from './ComponentStyles/Item';
 import PropTypes from 'prop-types';
 
 export default class Item extends React.Component {

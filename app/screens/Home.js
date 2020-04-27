@@ -1,9 +1,8 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import styles from '../styles/Home/Home';
-import SearchBar from '../components/Home/SearchBar';
-import Profile from '../components/Home/Profile';
-import Item from '../components/Home/Item';
+import styles from '../styles/Home';
+import SearchBar from '../components/SearchBar';
+import Item from '../components/Item';
 
 const playListData = [
   {picture: 'https://i.ytimg.com/vi/HPL74s4VPdk/maxresdefault.jpg',
@@ -35,8 +34,8 @@ export default class Home extends React.Component {
   render(){
     return(
       <View style={styles.container}>
-        <View style={styles.searchArea}>
-          <SearchBar/><Profile/>
+        <View>
+          <SearchBar/>
         </View>
         <ScrollView style={styles.scrollView}>
           <Item

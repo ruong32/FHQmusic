@@ -13,13 +13,6 @@ export default StyleSheet.create({
     height: device.height*0.8743,
     marginBottom: 10,
   },
-  searchArea: {
-    flexDirection: 'row',
-    alignItems: "center",
-    height: device.height*0.09,
-    width: device.width,
-    backgroundColor: 'green'
-  },
   suggestArea: {
     marginTop: device.height*0.01,
     height: device.height*0.38,
