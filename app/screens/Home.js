@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView } from 'react-native';
+import { SafeAreaView, View, ScrollView, StatusBar } from 'react-native';
 import styles from '../styles/Home';
 import SearchBar from '../components/SearchBar';
 import Item from '../components/Item';
@@ -33,7 +33,8 @@ const forYou = [
 export default class Home extends React.Component {
   render(){
     return(
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="default" translucent/>
         <View>
           <SearchBar/>
         </View>
@@ -65,7 +66,7 @@ export default class Home extends React.Component {
             category="Chủ đề"
           />
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   }
 }

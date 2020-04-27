@@ -1,17 +1,13 @@
-import {StyleSheet, Dimensions} from 'react-native';
-const device = {
-  height: Dimensions.get('window').height,
-  width: Dimensions.get('window').width
-}
+import {StyleSheet} from 'react-native';
+import {device} from '../config/ScreenDimensions'
 
 export default StyleSheet.create({
   container: {
-    paddingTop: device.height*0.035,
-    backgroundColor: '#999999'   
+    backgroundColor: '#0D47A1'   
   },
   scrollView: {
-    height: device.height*0.8743,
-    marginBottom: 10,
+    height: device.height*0.81,
+    backgroundColor: '#E0E0E0'
   },
   suggestArea: {
     marginTop: device.height*0.01,

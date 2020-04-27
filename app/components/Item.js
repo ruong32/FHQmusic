@@ -21,20 +21,15 @@ export default class Item extends React.Component {
   }
 
   static defaultProps = {
-    itemAreaStyle: styles.itemArea,
-    titleTextStyle: styles.titleText,
     horizontal: false,
     scrollEnabled: true,
     data: [],
-    itemStyle: styles.item,
-    itemPictureStyle: styles.itemPicture,
-    itemNameStyle: styles.itemName
   };
 
   render(){
     return(  
-      <View style={this.props.itemAreaStyle}>
-        <Text style={this.props.titleTextStyle}>{this.props.category}</Text>
+      <View style={[styles.itemArea, this.props.itemAreaStyle]}>
+        <Text style={[styles.titleText, this.props.titleTextStyle]}>{this.props.category}</Text>
         <ScrollView 
           horizontal={this.props.horizontal}
           onScroll={Keyboard.dismiss}
@@ -43,11 +38,11 @@ export default class Item extends React.Component {
           scrollEnabled={this.props.scrollEnabled}
         >
           {this.props.data.map((item, index) => (
-          <View key={index.toString()} style={this.props.itemStyle}>
-            <Image style={this.props.itemPictureStyle} source={{
+          <View key={index.toString()} style={[styles.item, this.props.itemStyle]}>
+            <Image style={[styles.itemPicture, this.props.itemPictureStyle]} source={{
               uri: item.picture,
             }}/>
-            <Text style={this.props.itemNameStyle}>{item.name}</Text>
+            <Text style={[styles.itemName, this.props.itemNameStyle]}>{item.name}</Text>
           </View>
           ))}
         </ScrollView>
