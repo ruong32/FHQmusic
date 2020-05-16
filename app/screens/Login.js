@@ -6,6 +6,14 @@ import { StyleSheet, Text, View, Image,
 
 
 export default class Login extends Component {
+	state = {
+		isChecked : false,
+	};
+	setSelection = (value)=> {
+		// console.log(value)
+		this.setState({isChecked: !value})
+	} 
+	
 	render() {
 		const {navigate} = this.props.navigation;
 		return (
@@ -44,8 +52,9 @@ export default class Login extends Component {
 
 							<View style={styles.checkboxContainer}>
 								<CheckBox
-									value={false}
-									style={styles.checkbox}
+									value={this.state.isChecked}
+									onChange={() => this.setSelection(this.state.isChecked)}
+          							style={styles.checkbox}
 								/>
 								<Text style={styles.label}>Nhớ tài khoản ?</Text>
 							</View>
