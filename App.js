@@ -7,6 +7,8 @@ import Personal from './app/screens/Personal';
 import SongList from './app/screens/SongList';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Icon } from 'react-native-elements';
+import Register from './app/screens/Register'
+import Login from './app/screens/Login'
 
 const Tab = createBottomTabNavigator();
 
@@ -53,4 +55,19 @@ function App() {
 
 export default App;
 
-//demo
+// const Stack = createStackNavigator();
+
+// function App() {
+//   return (
+//     <MenuProvider>
+//       <NavigationContainer>
+//         <Stack.Navigator screenOptions={{ headerShown: false }}>
+//           <Stack.Screen name="Login" component={Login} />
+//           <Stack.Screen name="Register" component={Register} />
+//         </Stack.Navigator>
+//       </NavigationContainer>
+//     </MenuProvider>
+//   );
+// }
+
+// export default App;
