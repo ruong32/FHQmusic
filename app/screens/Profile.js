@@ -1,9 +1,13 @@
 import React from 'react';
-import { View, Text, Image, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { device } from '../config/ScreenDimensions'
 
 export default class Profile extends React.Component {
+
+    logout = () => {
+        this.props.navigation.navigate("Login")
+    }
     render() {
         return (
             <SafeAreaView style={styles.container}>
@@ -51,12 +55,13 @@ export default class Profile extends React.Component {
                             <Text>{'      '}Hướng dẫn sử dụng</Text>
                             <Text>{'\n\n'}</Text>
                         </View>
-
-                        <View style={styles.items}>
-                            <Icon name='sign-out' type='font-awesome'></Icon>
-                            <Text>{'      '}Đăng xuất</Text>
-                            <Text>{'\n\n'}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => this.logout()}>
+                            <View style={styles.items}>
+                                <Icon name='sign-out' type='font-awesome'></Icon>
+                                <Text>{'      '}Đăng xuất</Text>
+                                <Text>{'\n\n'}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
