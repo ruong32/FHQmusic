@@ -1,26 +1,21 @@
 import React from 'react';
-import { View, Text, Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements'
 import { device } from '../config/ScreenDimensions'
 
 export default class Profile extends React.Component {
+
+    logout = () => {
+        this.props.navigation.navigate("Login")
+    }
     render() {
-        const {navigate} = this.props.navigation;
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.header}>
                     <View style={styles.headcontainer}>
-                        <View style={styles.back}>
-                            <TouchableOpacity onPress={()=> navigate('TabNavigator')}>
-                                <Icon name='arrow-left' type='font-awesome' size={30}></Icon>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.mid}>
-                            <View style={styles.titleText}>
-                       
-                            
+                        <View style={styles.titleText}>
                             <Text>FHQ Music{'\n'}</Text>
-                            </View>
+                        </View>
 
                         <View>
                             <Image
@@ -35,8 +30,6 @@ export default class Profile extends React.Component {
                         <View>
                             <Text>{'\n \n'}Nguyen Van A</Text>
                         </View>
-                    </View>
-                            <View style={styles.blank}></View>
                     </View>
                     <View style={styles.hor}></View>
 
@@ -62,14 +55,16 @@ export default class Profile extends React.Component {
                             <Text>{'      '}Hướng dẫn sử dụng</Text>
                             <Text>{'\n\n'}</Text>
                         </View>
-
-                        <View style={styles.items}>
-                            <Icon name='sign-out' type='font-awesome'></Icon>
-                            <Text>{'      '}Đăng xuất</Text>
-                            <Text>{'\n\n'}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => this.logout()}>
+                            <View style={styles.items}>
+                                <Icon name='sign-out' type='font-awesome'></Icon>
+                                <Text>{'      '}Đăng xuất</Text>
+                                <Text>{'\n\n'}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </View>
+
 
             </SafeAreaView>
         );
@@ -80,11 +75,15 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
+        justifyContent: 'center',
         backgroundColor: 'rgb(243,195,176)',
+        alignItems: 'stretch',
     },
     header: {
         flex: 3,
         flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'center',
     },
 
     middle: {
@@ -98,18 +97,16 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign: 'center',
         fontSize: 30,
-
     },
     hor: {
         borderBottomColor: 'black',
         borderBottomWidth: 1,
         flex: 1,
         flexDirection: 'column',
-        marginBottom: -50,
     },
     headcontainer: {
         flex: 6,
-        flexDirection: 'row',
+        flexDirection: 'column',
         alignItems: 'center',
     },
     blank: {
@@ -127,15 +124,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         fontSize: 26,
         alignItems: 'stretch'
-    },
-    back: {
-      flex: 1,
-      flexDirection: 'row',
-      marginBottom: 100,
-      marginLeft: 10,
-    },
-    icons: {
-        
     }
 });
 
