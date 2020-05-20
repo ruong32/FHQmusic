@@ -9,6 +9,10 @@ export default class Profile extends React.Component {
         this.props.navigation.navigate("Login")
     }
     render() {
+        const {navigate} = this.props.navigation;
+        logout = () => {
+            this.props.navigation.navigate("Login")
+        }
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.header}>
