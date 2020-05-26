@@ -10,6 +10,7 @@ import { Icon } from 'react-native-elements';
 import Register from './app/screens/Register';
 import Login from './app/screens/Login';
 import Profile from './app/screens/Profile';
+import Player from './app/screens/Player';
 
 const Tab = createBottomTabNavigator();
 
@@ -51,6 +52,7 @@ function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Player" component={Player} />
         </Stack.Navigator>
       </NavigationContainer>
     </MenuProvider>

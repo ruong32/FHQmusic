@@ -67,7 +67,7 @@ export default class ListSongs extends React.Component {
   }
 
   playSong = id => {
-    
+    this.props.navigate("Player");
   }
   
   renderItem = ({item, index}) => {
