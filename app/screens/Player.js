@@ -5,7 +5,7 @@ import Moment from 'moment';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Entypo from 'react-native-vector-icons/Entypo';
-var image1 = require("./image/anhthanhnien.jpg");
+import styles from '../styles/Player';
 
 
 export default class App extends React.Component {
