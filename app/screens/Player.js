@@ -40,16 +40,16 @@ export default class App extends React.Component {
   }
 
   async componentDidMount(){
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      staysActiveInBackground: true,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-      playThroughEarpieceAndroid: false
-    });
     if (!global.playbackInstance) {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        staysActiveInBackground: true,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        playThroughEarpieceAndroid: false
+      });
       global.playbackInstance = new Audio.Sound();
     }
     await this._loadNewPlaybackInstance(true);
@@ -70,7 +70,6 @@ export default class App extends React.Component {
       volume: this.state.volume,
       isMuted: this.state.muted,
       isLooping: false,
-      pitchCorrectionQuality: Audio.PitchCorrectionQuality.High
       // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
       // androidImplementation: 'MediaPlayer',
     };
