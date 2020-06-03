@@ -37,6 +37,7 @@ export default class App extends React.Component {
 
   UNSAFE_componentWillMount(){
     this.song = this.getSongById(this.index);
+    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
   }
 
   async componentDidMount(){
@@ -70,11 +71,7 @@ export default class App extends React.Component {
       volume: this.state.volume,
       isMuted: this.state.muted,
       isLooping: false,
-      // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
-      // androidImplementation: 'MediaPlayer',
     };
-
-    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate)
 
     await global.playbackInstance.loadAsync(
       source,
