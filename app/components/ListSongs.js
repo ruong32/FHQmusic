@@ -14,6 +14,7 @@ import { device } from '../config/ScreenDimensions'
 const songs = [
   {
     id: 0,
+    uri: "https://musicapp1509.000webhostapp.com/Nhac/Anh%20Thanh%20Ni%C3%AAn%20-%20HuyR%20-%20OFFICIAL%20MV.mp3",
     picture: 'https://i.ytimg.com/vi/HPL74s4VPdk/maxresdefault.jpg',
     name: 'Anh thanh niên',
     singer: 'HuyR',
@@ -22,6 +23,7 @@ const songs = [
   },
   { 
     id: 1,
+    uri: "https://musicapp1509.000webhostapp.com/Nhac/V%C3%8C%20Y%C3%8AU%20C%E1%BB%A8%20%C4%90%C3%82M%20%C4%90%E1%BA%A6U%20(VYC%C4%90%C4%90)%20-%20MIN%20x%20%C4%90EN%20x%20JUSTATEE%20-%20OFFICIAL%20MUSIC%20VIDEO%20(%EB%AF%BC).mp3",
     picture: 'https://i.ytimg.com/vi/EWz4fITO5qg/maxresdefault.jpg',
     name: 'Vì yêu cứ đâm đầu',
     singer: 'MIN x ĐEN x JUSTATEE',
@@ -30,6 +32,7 @@ const songs = [
   },
   {
     id: 2,
+    uri: "https://musicapp1509.000webhostapp.com/Nhac/M%E1%BA%B7t%20Tr%E1%BB%9Di%20C%E1%BB%A7a%20Em%20-%20Official%20MV%20-%20Ph%C6%B0%C6%A1ng%20Ly%20ft%20JustaTee.mp3",
     picture: 'https://i.ytimg.com/vi/t0WFOnwp3MM/maxresdefault.jpg',
     name: 'Mặt trời của em ',
     singer: 'Phương Ly',
@@ -38,6 +41,7 @@ const songs = [
   },
   {
     id: 3,
+    uri: "https://musicapp1509.000webhostapp.com/Nhac/%C4%90%C3%83%20L%E1%BB%A0%20Y%C3%8AU%20EM%20NHI%E1%BB%80U%20-%20JUSTATEE%20(%20FID%20REMIX%20).mp3",
     picture: 'https://i.ytimg.com/vi/KhTCatAKVpk/maxresdefault.jpg',
     name: 'Đã lỡ yêu em nhiều',
     singer: 'JustaTee',
@@ -48,7 +52,8 @@ const songs = [
 
 export default class ListSongs extends React.Component {
   state = {
-    dayOffset: ''
+    dayOffset: '',
+    playlist: []
   }
 
   getDayOffset = time => {
@@ -67,7 +72,7 @@ export default class ListSongs extends React.Component {
   }
 
   playSong = id => {
-    this.props.navigate("Player");
+    this.props.navigate("Player", {songId: id, playlist: this.state.playlist});
   }
   
   renderItem = ({item, index}) => {
@@ -132,21 +137,20 @@ export default class ListSongs extends React.Component {
   }
 
   render(){
-    let data
     if (this.props.type === 'songs'){
-      data = songs.sort((a, b) => {
+      this.state.playlist = songs.sort((a, b) => {
         let nameA = a.name.toUpperCase();
         let nameB = b.name.toUpperCase();
         return nameA.localeCompare(nameB);
       });
     } else if (this.props.type === 'favorite') {
-      data = songs.filter(item => item.favorite==1)
+      this.state.playlist = songs.filter(item => item.favorite==1)
     } else if (this.props.type === 'history') {
-      data = songs.sort((a, b) => b.latestListening - a.latestListening);
+      this.state.playlist = songs.sort((a, b) => b.latestListening - a.latestListening);
     }
     return (
       <FlatList
-        data={data}
+        data={this.state.playlist}
         keyExtractor={(item, index) => index.toString()}
         renderItem={this.renderItem}
         style={styles.flatList}

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     backgroundColor: '#0D47A1', 
   },
   scrollView: {
-    height: device.height*0.81,
+    height: device.height*0.78,
     backgroundColor: '#E0E0E0'
   },
   suggestArea: {

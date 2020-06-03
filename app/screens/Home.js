@@ -30,6 +30,21 @@ const forYou = [
   {picture: 'https://i.ytimg.com/vi/j4Jj29mUYS8/maxresdefault.jpg'}
 ];
 
+const topicData = [
+  {
+    picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQRwfB-qpOCUWGWioAlOxTXOdG2HiIS8Eu2PI_0Lh4GgA_8kFdd&usqp=CAU',
+    name: 'Cách mạng'
+  },
+  {
+    picture: 'https://avatar-nct.nixcdn.com/playlist/2017/12/18/b/4/e/e/1513580321142_500.jpg',
+    name: 'Nhạc trẻ'
+  },
+  {
+    picture: 'https://znews-photo.zadn.vn/w660/Uploaded/ofh_fdmzsofw/2017_05_17/18403557_754897321354685_5074903081571930249_n.jpg',
+    name: 'Bolero'
+  },
+];
+
 export default class Home extends React.Component {
   render(){
     return(
@@ -64,6 +79,8 @@ export default class Home extends React.Component {
           />
           <Item 
             category="Chủ đề"
+            data={topicData}
+            horizontal={true}
           />
         </ScrollView>
       </SafeAreaView>
