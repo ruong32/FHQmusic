@@ -49,6 +49,9 @@ export default class App extends React.Component {
       interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
       playThroughEarpieceAndroid: false
     });
+    if (!global.playbackInstance) {
+      global.playbackInstance = new Audio.Sound();
+    }
     await this._loadNewPlaybackInstance(true);
   }
 
@@ -57,9 +60,6 @@ export default class App extends React.Component {
   }
 
   async _loadNewPlaybackInstance(playing){
-    if (!global.playbackInstance) {
-      global.playbackInstance = new Audio.Sound();
-    }
     await global.playbackInstance.unloadAsync();
     this.song = this.getSongById(this.index);
     const source = { uri: this.song.uri };
@@ -70,7 +70,7 @@ export default class App extends React.Component {
       volume: this.state.volume,
       isMuted: this.state.muted,
       isLooping: false,
-      pitchCorrectionQuality: Audio.PitchCorrectionQuality.Low
+      pitchCorrectionQuality: Audio.PitchCorrectionQuality.High
       // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
       // androidImplementation: 'MediaPlayer',
     };
