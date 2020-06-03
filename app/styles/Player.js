@@ -21,7 +21,6 @@ export default StyleSheet.create({
         color: '#2e2d2b'
       },
       singer: {
-        marginTop: - device.height * 0.026,
         marginLeft: device.width * 0.103,
       },
       nameSinger: {

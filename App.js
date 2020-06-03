@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, TransitionSpecs, TransitionPresets } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Home from './app/screens/Home';
 import Personal from './app/screens/Personal';
@@ -52,7 +52,13 @@ function App() {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Player" component={Player} />
+          <Stack.Screen 
+            name="Player"
+            component={Player} 
+            options={{
+              ...TransitionPresets.ModalSlideFromBottomIOS
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </MenuProvider>
