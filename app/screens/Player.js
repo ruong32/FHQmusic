@@ -37,18 +37,22 @@ export default class App extends React.Component {
 
   UNSAFE_componentWillMount(){
     this.song = this.getSongById(this.index);
+    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
   }
 
   async componentDidMount(){
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      staysActiveInBackground: true,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-      playThroughEarpieceAndroid: false
-    });
+    if (!global.playbackInstance) {
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        staysActiveInBackground: true,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        playThroughEarpieceAndroid: false
+      });
+      global.playbackInstance = new Audio.Sound();
+    }
     await this._loadNewPlaybackInstance(true);
   }
 
@@ -57,9 +61,6 @@ export default class App extends React.Component {
   }
 
   async _loadNewPlaybackInstance(playing){
-    if (!global.playbackInstance) {
-      global.playbackInstance = new Audio.Sound();
-    }
     await global.playbackInstance.unloadAsync();
     this.song = this.getSongById(this.index);
     const source = { uri: this.song.uri };
@@ -70,12 +71,7 @@ export default class App extends React.Component {
       volume: this.state.volume,
       isMuted: this.state.muted,
       isLooping: false,
-      pitchCorrectionQuality: Audio.PitchCorrectionQuality.Low
-      // // UNCOMMENT THIS TO TEST THE OLD androidImplementation:
-      // androidImplementation: 'MediaPlayer',
     };
-
-    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate)
 
     await global.playbackInstance.loadAsync(
       source,
