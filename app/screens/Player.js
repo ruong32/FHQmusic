@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
-import {Slider} from 'react-native-elements';
+import Slider from 'react-native-slider';
 import Moment from 'moment';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -37,7 +37,6 @@ export default class App extends React.Component {
 
   UNSAFE_componentWillMount(){
     this.song = this.getSongById(this.index);
-    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
   }
 
   async componentDidMount(){
@@ -53,6 +52,7 @@ export default class App extends React.Component {
       });
       global.playbackInstance = new Audio.Sound();
     }
+    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
     await this._loadNewPlaybackInstance(true);
   }
 
