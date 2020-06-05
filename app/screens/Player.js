@@ -37,7 +37,6 @@ export default class App extends React.Component {
 
   UNSAFE_componentWillMount(){
     this.song = this.getSongById(this.index);
-    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
   }
 
   async componentDidMount(){
@@ -53,6 +52,7 @@ export default class App extends React.Component {
       });
       global.playbackInstance = new Audio.Sound();
     }
+    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
     await this._loadNewPlaybackInstance(true);
   }
 
