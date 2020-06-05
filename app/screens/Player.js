@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, StatusBar, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native';
-import Slider from 'react-native-slider';
+import {Slider} from 'react-native-elements';
 import Moment from 'moment';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';

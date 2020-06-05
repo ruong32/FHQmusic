@@ -9,46 +9,8 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import { Icon } from 'react-native-elements';
-import { device } from '../config/ScreenDimensions'
-
-const songs = [
-  {
-    id: 0,
-    uri: "https://musicapp1509.000webhostapp.com/Nhac/Anh%20Thanh%20Ni%C3%AAn%20-%20HuyR%20-%20OFFICIAL%20MV.mp3",
-    picture: 'https://i.ytimg.com/vi/HPL74s4VPdk/maxresdefault.jpg',
-    name: 'Anh thanh niên',
-    singer: 'HuyR',
-    favorite: 0,
-    latestListening: 1587917439178,
-  },
-  { 
-    id: 1,
-    uri: "https://musicapp1509.000webhostapp.com/Nhac/V%C3%8C%20Y%C3%8AU%20C%E1%BB%A8%20%C4%90%C3%82M%20%C4%90%E1%BA%A6U%20(VYC%C4%90%C4%90)%20-%20MIN%20x%20%C4%90EN%20x%20JUSTATEE%20-%20OFFICIAL%20MUSIC%20VIDEO%20(%EB%AF%BC).mp3",
-    picture: 'https://i.ytimg.com/vi/EWz4fITO5qg/maxresdefault.jpg',
-    name: 'Vì yêu cứ đâm đầu',
-    singer: 'MIN x ĐEN x JUSTATEE',
-    favorite: 1,
-    latestListening: 1587267045840,
-  },
-  {
-    id: 2,
-    uri: "https://musicapp1509.000webhostapp.com/Nhac/M%E1%BA%B7t%20Tr%E1%BB%9Di%20C%E1%BB%A7a%20Em%20-%20Official%20MV%20-%20Ph%C6%B0%C6%A1ng%20Ly%20ft%20JustaTee.mp3",
-    picture: 'https://i.ytimg.com/vi/t0WFOnwp3MM/maxresdefault.jpg',
-    name: 'Mặt trời của em ',
-    singer: 'Phương Ly',
-    favorite: 0,
-    latestListening: 1587917439178,
-  },
-  {
-    id: 3,
-    uri: "https://musicapp1509.000webhostapp.com/Nhac/%C4%90%C3%83%20L%E1%BB%A0%20Y%C3%8AU%20EM%20NHI%E1%BB%80U%20-%20JUSTATEE%20(%20FID%20REMIX%20).mp3",
-    picture: 'https://i.ytimg.com/vi/KhTCatAKVpk/maxresdefault.jpg',
-    name: 'Đã lỡ yêu em nhiều',
-    singer: 'JustaTee',
-    favorite: 1,
-    latestListening: 1587756992587,
-  },
-]
+import { device } from '../config/ScreenDimensions';
+import { songs } from '../data/data';
 
 export default class ListSongs extends React.Component {
   state = {

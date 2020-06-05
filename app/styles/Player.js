@@ -4,7 +4,7 @@ import {device} from '../config/ScreenDimensions'
 export default StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ded5d6',
+        backgroundColor: '#806a7f',
       },
       header: {
         flexDirection: 'row'
