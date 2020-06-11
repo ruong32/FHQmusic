@@ -33,8 +33,8 @@ export default class ListSongs extends React.Component {
     } else return new Date(time).toLocaleString();
   }
 
-  playSong = id => {
-    this.props.navigate("Player", {songId: id, playlist: this.state.playlist});
+  playSong = index => {
+    this.props.navigate("Player", {songPos: index, playlist: this.state.playlist});
   }
   
   renderItem = ({item, index}) => {
@@ -45,7 +45,7 @@ export default class ListSongs extends React.Component {
       this.state.dayOffset = itemDayOffset;
     }
     return(
-      <Animatable.View animation="zoomInLeft" delay={750} duration={2000}>
+      <View>
         {showDayOffset ?
         <View style={styles.dayOffsetContainer}>
           <Text style={styles.dayOffset}>{itemDayOffset}</Text>
@@ -54,7 +54,7 @@ export default class ListSongs extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => {
-            this.playSong(item.id);
+            this.playSong(index);
             item.latestListening = new Date().getTime();
             this.setState({dayOffset: ''});
           }}  
@@ -94,7 +94,7 @@ export default class ListSongs extends React.Component {
           </View>
         </View>
         </TouchableOpacity>
-      </Animatable.View>
+      </View>
     );
   }
 
