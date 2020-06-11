@@ -16,7 +16,7 @@ export default class Personal extends React.Component {
           <View>
             <StatusBar barStyle="default" translucent/>
             <View>
-              <SearchBar/>
+              <SearchBar navigation={this.props.navigation}/>
             </View>
             <View style={styles.titleTextContainer}>
               <Text style={styles.titleText}>Cá nhân</Text>
@@ -42,7 +42,7 @@ export default class Personal extends React.Component {
             })}
             </View>
           </View>
-        <MiniPlayer />
+        <MiniPlayer navigate={navigate}/>
         </View>
       </SafeAreaView>
     );

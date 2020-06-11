@@ -47,7 +47,7 @@ export default class Home extends React.Component {
               />
             </ScrollView>
           </View>
-          <MiniPlayer />
+          <MiniPlayer navigate={this.props.navigation.navigate}/>
         </View>
       </SafeAreaView>
     );

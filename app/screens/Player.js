@@ -6,40 +6,34 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import styles from '../styles/Player';
 import { Audio } from 'expo-av';
+import { setSong, updateSongStatus } from '../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 const LOOPING_TYPE_ALL = 0;
 const LOOPING_TYPE_ONE = 1;
 const LOOPING_TYPE_OFF = 2;
 
-export default class App extends React.Component {
+let count = 0;
+
+class Player extends React.Component {
   constructor(props){
     super(props)
     this.playlist = this.props.route.params.playlist
-    this.index = this.props.route.params.songId
-    this.song = null
+    this.index = this.props.route.params.songPos
     this.isSeeking = false;
     this.shouldPlayAtEndOfSeek = false;
-    this.state = {
-      loopingType: LOOPING_TYPE_ALL,
-      muted: false,
-      playbackInstancePosition: 0,
-      playbackInstanceDuration: 0,
-      shouldPlay: false,
-      isPlaying: false,
-      isBuffering: false,
-      isLoading: true,
-      shouldCorrectPitch: true,
-      volume: 1.0,
-      rate: 1.0,
-      throughEarpiece: false
-    };
+    this.continue = false;
   }
 
-  UNSAFE_componentWillMount(){
-    this.song = this.getSongById(this.index);
-  }
-
-  async componentDidMount(){
+  async UNSAFE_componentWillMount(){
+    if (this.props.route.params.currentSong){
+      this.continue = true;
+    } else {
+      const song = this.getSong(this.index);
+      this.props.setSong(song, this.index, this.playlist)
+    }
+    // console.log(this.props.player)
     if (!global.playbackInstance) {
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
@@ -51,25 +45,29 @@ export default class App extends React.Component {
         playThroughEarpieceAndroid: false
       });
       global.playbackInstance = new Audio.Sound();
+      global.playbackInstance.setOnPlaybackStatusUpdate(this.props.updateSong);
     }
-    global.playbackInstance.setOnPlaybackStatusUpdate(this._onPlaybackStatusUpdate);
-    await this._loadNewPlaybackInstance(true);
+    if (!this.continue){
+      await this._loadNewPlaybackInstance(true);
+    }
   }
 
-  componentWillUnmount(){
-    global.playbackInstance.setOnPlaybackStatusUpdate(null);
-  }
+  // componentWillUnmount(){
+  //   global.playbackInstance.setOnPlaybackStatusUpdate(null);
+  // }
 
   async _loadNewPlaybackInstance(playing){
     await global.playbackInstance.unloadAsync();
-    this.song = this.getSongById(this.index);
-    const source = { uri: this.song.uri };
+    this.props.status.isPlaying = false;
+    const song = this.getSong(this.index);
+    this.props.setSong(song, this.index, this.playlist);
+    const source = { uri: this.props.player.currentSong.uri };
     const initialStatus = {
       shouldPlay: playing,
-      rate: this.state.rate,
-      shouldCorrectPitch: this.state.shouldCorrectPitch,
-      volume: this.state.volume,
-      isMuted: this.state.muted,
+      rate: this.props.status.rate,
+      shouldCorrectPitch: this.props.status.shouldCorrectPitch,
+      volume: this.props.status.volume,
+      isMuted: this.props.status.muted,
       isLooping: false,
     };
 
@@ -79,32 +77,20 @@ export default class App extends React.Component {
     );
   }
 
-  _onPlaybackStatusUpdate = status => {
-    console.log(status);
-    if (status.isLoaded) {
-      this.setState({
-        playbackInstancePosition: status.positionMillis,
-        playbackInstanceDuration: status.durationMillis,
-        shouldPlay: status.shouldPlay,
-        isPlaying: status.isPlaying,
-        isBuffering: status.isBuffering,
-        isLoading: status.positionMillis === 0,
-        rate: status.rate,
-        muted: status.isMuted,
-        volume: status.volume,
-        loopingType: status.isLooping ? LOOPING_TYPE_ONE : LOOPING_TYPE_ALL,
-        shouldCorrectPitch: status.shouldCorrectPitch
-      });
-      if (status.didJustFinish && !status.isLooping) {
-        this._advanceIndex(true);
-        this._loadNewPlaybackInstance(true);
-      }
-    } else {
-      if (status.error) {
-        console.log(`FATAL PLAYER ERROR: ${status.error}`);
-      }
-    }
-  };
+  // _onPlaybackStatusUpdate = status => {
+  //   // console.log(status);
+  //   if (status.isLoaded) {
+  //     this.props.updateSong(status);
+  //     if (status.didJustFinish && !status.isLooping) {
+  //       this._advanceIndex(true);
+  //       this._loadNewPlaybackInstance(true);
+  //     }
+  //   } else {
+  //     if (status.error) {
+  //       console.log(`FATAL PLAYER ERROR: ${status.error}`);
+  //     }
+  //   }
+  // };
 
   _advanceIndex(forward) {
     this.index =
@@ -113,7 +99,7 @@ export default class App extends React.Component {
 
   _onPlayPausePressed = () => {
     if (global.playbackInstance) {
-      if (this.state.isPlaying) {
+      if (this.props.status.isPlaying) {
         global.playbackInstance.pauseAsync();
       } else {
         global.playbackInstance.playAsync();
@@ -121,24 +107,30 @@ export default class App extends React.Component {
     }
   };
 
-  _onForwardPressed = () => {
+  _onForwardPressed = async () => {
     if (global.playbackInstance) {
-      this._advanceIndex(true);
-      this._loadNewPlaybackInstance(true);
+      const status = await global.playbackInstance.getStatusAsync();
+      if (status.isLoaded){
+        this._advanceIndex(true);
+        this._loadNewPlaybackInstance(true);
+      }
     }
   };
 
-  _onBackPressed = () => {
+  _onBackPressed = async () => {
     if (global.playbackInstance) {
-      this._advanceIndex(false);
-      this._loadNewPlaybackInstance(true);
+      const status = await global.playbackInstance.getStatusAsync();
+      if (status.isLoaded){
+        this._advanceIndex(false);
+        this._loadNewPlaybackInstance(true);
+      }
     }
   };
 
   _onSeekSliderValueChange = value => {
     if (global.playbackInstance && !this.isSeeking) {
       this.isSeeking = true;
-      this.shouldPlayAtEndOfSeek = this.state.shouldPlay;
+      this.shouldPlayAtEndOfSeek = this.props.status.shouldPlay;
       global.playbackInstance.pauseAsync();
     }
   };
@@ -146,7 +138,7 @@ export default class App extends React.Component {
   _onSeekSliderSlidingComplete = async value => {
     if (global.playbackInstance) {
       this.isSeeking = false;
-      const seekPosition = value * this.state.playbackInstanceDuration;
+      const seekPosition = value * this.props.status.playbackInstanceDuration;
       if (this.shouldPlayAtEndOfSeek) {
         global.playbackInstance.playFromPositionAsync(seekPosition);
       } else {
@@ -158,24 +150,25 @@ export default class App extends React.Component {
   _getSeekSliderPosition() {
     if (
       global.playbackInstance &&
-      this.state.playbackInstancePosition &&
-      this.state.playbackInstanceDuration
+      this.props.status.playbackInstancePosition &&
+      this.props.status.playbackInstanceDuration
     ) {
-      return (
-        this.state.playbackInstancePosition /
-        this.state.playbackInstanceDuration
-      );
-    }
+      const value = this.props.status.playbackInstancePosition / this.props.status.playbackInstanceDuration;
+        if (this.props.status.didJustFinish){
+          count++; // because of duplication rerendering (3 times) when update redux state
+          if (count === 3){
+            this._advanceIndex(true);
+            this._loadNewPlaybackInstance(true);
+            count = 0;
+          }
+        }
+        return value;
+      }
     return 0;
   }
 
-  getSongById(id){
-    for(let i=0; i<this.playlist.length; i++){
-      if (this.playlist[i].id === id){
-        return this.playlist[i];
-      }
-    }
-    return null;
+  getSong(index){
+    return this.playlist[index];
   }
 
   _goBack = () => {
@@ -183,17 +176,20 @@ export default class App extends React.Component {
   }
 
   render() {
+    if (!this.props.player){
+      return <View></View>
+    }
     return (
       <SafeAreaView style={styles.container}>
         <StatusBar backgroundColor="#ded5d6"></StatusBar>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._goBack()} style={{flexDirection: 'row'}}>
             <Ionicons style={styles.downButton} name="ios-arrow-down" size={35}></Ionicons>
-            <Text style={styles.song}>{this.song.name} - {this.song.singer}</Text>
+            <Text style={styles.song}>{this.props.player.currentSong.name} - {this.props.player.currentSong.singer}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.image}>
-          <Image source={{uri: this.song.picture}} style={styles.imageSong}></Image>
+          <Image source={{uri: this.props.player.currentSong.picture}} style={styles.imageSong}></Image>
         </View>
         <View style={styles.taskBar}>
           <TouchableOpacity>
@@ -213,24 +209,24 @@ export default class App extends React.Component {
             value={this._getSeekSliderPosition()}
             onValueChange={this._onSeekSliderValueChange}
             onSlidingComplete={this._onSeekSliderSlidingComplete}
-            disabled={this.state.isLoading}
+            disabled={this.props.status.isLoading}
           ></Slider>
           <View style={{ marginTop: -5, flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={[styles.textLight, styles.timeStamp]}>{Moment.utc(this.state.playbackInstancePosition).format("m:ss")}</Text>
-              <Text style={[styles.textLight, styles.timeStamp]}>{Moment.utc(this.state.playbackInstanceDuration).format("m:ss")}</Text>
+              <Text style={[styles.textLight, styles.timeStamp]}>{this.props.status.playbackInstancePosition? Moment.utc(this.props.status.playbackInstancePosition).format("m:ss") : Moment.utc(0).format("m:ss")}</Text>
+              <Text style={[styles.textLight, styles.timeStamp]}>{this.props.status.playbackInstanceDuration? Moment.utc(this.props.status.playbackInstanceDuration).format("m:ss") : Moment.utc(0).format("m:ss")}</Text>
           </View>
         </View>
         <View style={styles.control}>
           <TouchableOpacity>
             <MaterialIcons name="shuffle" style={styles.random} size={28}></MaterialIcons>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this._onForwardPressed()}>
+          <TouchableOpacity onPress={() => this._onBackPressed()}>
             <MaterialIcons name="skip-previous" style={styles.backward} size={36}></MaterialIcons>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => this._onPlayPausePressed()}>
-            <MaterialIcons name={this.state.isPlaying ? "pause-circle-filled" : "play-circle-filled"} style={styles.pause} size={55}></MaterialIcons> 
+            <MaterialIcons name={this.props.status.isPlaying ? "pause-circle-filled" : "play-circle-filled"} style={styles.pause} size={55}></MaterialIcons> 
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => this._onBackPressed()}>
+          <TouchableOpacity onPress={() => this._onForwardPressed()}>
             <MaterialIcons name="skip-next" style={styles.forward} size={36}></MaterialIcons>
           </TouchableOpacity>
           <TouchableOpacity>
@@ -243,7 +239,17 @@ export default class App extends React.Component {
         </ScrollView>
       </SafeAreaView>
     );
-    
   }
-    
 }
+
+const mapStateToProps = state => ({
+  player: state.player,
+  status: state.updateSong
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  setSong: bindActionCreators(setSong, dispatch),
+  updateSong: bindActionCreators(updateSongStatus, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
