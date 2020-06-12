@@ -9,7 +9,7 @@ import MiniPlayer from '../components/MiniPlayer';
 export default class Home extends React.Component {
   render(){
     return(
-      <SafeAreaView style={{flex: 1, backgroundColor: '#0D47A1'}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#0D47A1', paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <StatusBar barStyle="default" translucent/>

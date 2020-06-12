@@ -181,7 +181,7 @@ class Player extends React.Component {
     }
     return (
       <SafeAreaView style={styles.container}>
-        <StatusBar backgroundColor="#ded5d6"></StatusBar>
+        <StatusBar barStyle="default" translucent></StatusBar>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._goBack()} style={{flexDirection: 'row'}}>
             <Ionicons style={styles.downButton} name="ios-arrow-down" size={35}></Ionicons>
