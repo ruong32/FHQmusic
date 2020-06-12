@@ -9,14 +9,14 @@ export default StyleSheet.create({
   container:{
     backgroundColor: '#fff',
     flexDirection: 'row',
-    marginBottom: device.height*0.015,
+    marginBottom: device.height*0.01,
     marginHorizontal: device.width*0.02,
     borderRadius: 5,
     shadowColor: "#000000",
-    shadowOpacity: 0.8,
+    shadowOpacity: 0.6,
     shadowOffset: {
-      height: 1,
-      width: 1
+      height: 0.5,
+      width: 0.5
     }
   },
   image:{

@@ -51,16 +51,16 @@ const playListData = [
       type: 'favorite',
     },
     {
-      title: 'Lịch sử nghe nhạc',
-      icon: 'history',
-      type: 'history',
+      title: 'Playlist',
+      icon: 'queue-music',
+      type: 'playlist',
     },
   ]
 
   const songs = [
     {
       id: 0,
-      uri: "https://data20.chiasenhac.com/downloads/2061/4/2060821-946b2223/m4a/Anh%20Thanh%20Nien%20-%20HuyR.m4a",
+      uri: "https://data20.chiasenhac.com/downloads/2061/5/2060821-946b2223/m4a/Anh%20Thanh%20Nien%20-%20HuyR.m4a",
       picture: 'https://i.ytimg.com/vi/HPL74s4VPdk/maxresdefault.jpg',
       name: 'Anh thanh niên',
       singer: 'HuyR',
@@ -69,7 +69,7 @@ const playListData = [
     },
     { 
       id: 1,
-      uri: "https://data19.chiasenhac.com/downloads/2046/4/2045334-677410ec/m4a/Vi%20Yeu%20Cu%20Dam%20Dau%20-%20MIN_%20Den_%20JustaTee.m4a",
+      uri: "https://data19.chiasenhac.com/downloads/2046/5/2045334-677410ec/m4a/Vi%20Yeu%20Cu%20Dam%20Dau%20-%20MIN_%20Den_%20JustaTee.m4a",
       picture: 'https://i.ytimg.com/vi/EWz4fITO5qg/maxresdefault.jpg',
       name: 'Vì yêu cứ đâm đầu',
       singer: 'MIN x ĐEN x JUSTATEE',
@@ -78,7 +78,7 @@ const playListData = [
     },
     {
       id: 2,
-      uri: "https://data00.chiasenhac.com/downloads/1840/4/1839053-623da96a/m4a/Mat%20Troi%20Cua%20Em%20-%20Phuong%20Ly_%20JustaTee.m4a",
+      uri: "https://data00.chiasenhac.com/downloads/1840/5/1839053-623da96a/m4a/Mat%20Troi%20Cua%20Em%20-%20Phuong%20Ly_%20JustaTee.m4a",
       picture: 'https://i.ytimg.com/vi/t0WFOnwp3MM/maxresdefault.jpg',
       name: 'Mặt trời của em ',
       singer: 'Phương Ly',
@@ -87,7 +87,7 @@ const playListData = [
     },
     {
       id: 3,
-      uri: "https://data00.chiasenhac.com/downloads/1856/4/1855446-4b1d5098/320/Da%20Lo%20Yeu%20Em%20Nhieu%20-%20JustaTee.mp3",
+      uri: "https://data00.chiasenhac.com/downloads/1856/5/1855446-4b1d5098/320/Da%20Lo%20Yeu%20Em%20Nhieu%20-%20JustaTee.mp3",
       picture: 'https://i.ytimg.com/vi/KhTCatAKVpk/maxresdefault.jpg',
       name: 'Đã lỡ yêu em nhiều',
       singer: 'JustaTee',
@@ -96,7 +96,7 @@ const playListData = [
     },
     {
       id: 4,
-      uri: "https://data25.chiasenhac.com/downloads/2085/4/2084204-269ba905/m4a/Em%20Khong%20Sai%20Chung%20Ta%20Sai%20-%20ERIK.m4a",
+      uri: "https://data25.chiasenhac.com/downloads/2085/5/2084204-269ba905/m4a/Em%20Khong%20Sai%20Chung%20Ta%20Sai%20-%20ERIK.m4a",
       picture: 'https://data.chiasenhac.com/data/cover/121/120248.jpg',
       name: 'Em không sai chúng ta sai',
       singer: 'Erik',
@@ -105,7 +105,7 @@ const playListData = [
     },
     {
       id: 5,
-      uri: "https://data2.chiasenhac.com/downloads/1705/4/1704778-c7c3427c/m4a/Turn%20It%20Up%20-%20Monstar.m4a",
+      uri: "https://data2.chiasenhac.com/downloads/1705/5/1704778-c7c3427c/m4a/Turn%20It%20Up%20-%20Monstar.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1480912341/v1/album/s2/0/19/94/20019736.jpg?v=1480912341',
       name: 'Turn It Up',
       singer: 'Monstar',
@@ -114,7 +114,7 @@ const playListData = [
     },
     {
       id: 6,
-      uri: "https://data37.chiasenhac.com/downloads/1887/4/1886604-d936f53d/m4a/I_m%20A%20Superman%20Live%20Performance%20Version_.m4a",
+      uri: "https://data37.chiasenhac.com/downloads/1887/5/1886604-d936f53d/m4a/I_m%20A%20Superman%20Live%20Performance%20Version_.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1500687847/v1/album/s2/0/19/799/20741146.jpg?v=1500687847',
       name: "I'm A Superman",
       singer: 'BAK (Bảo Kun)',
@@ -123,7 +123,7 @@ const playListData = [
     },
     {
       id: 7,
-      uri: "https://data54.chiasenhac.com/downloads/1108/4/1107072-42919719/m4a/Tinh%20Yeu%20Mau%20Nang%20-%20Doan%20Thuy%20Trang_%20Big.m4a",
+      uri: "https://data54.chiasenhac.com/downloads/1108/5/1107072-42919719/m4a/Tinh%20Yeu%20Mau%20Nang%20-%20Doan%20Thuy%20Trang_%20Big.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1/v1/artists/s2/0/0/0/729.jpg?v=1',
       name: 'Tình Yêu Màu Nắng',
       singer: 'BigDaddy, Đoàn Thúy Trang',
@@ -132,7 +132,7 @@ const playListData = [
     },
     {
       id: 8,
-      uri: "https://data2.chiasenhac.com/downloads/1699/4/1698220-b2544de6/m4a/Chung%20Ta%20Khong%20Thuoc%20Ve%20Nhau%20-%20Son%20Tung.m4a",
+      uri: "https://data2.chiasenhac.com/downloads/1699/5/1698220-b2544de6/m4a/Chung%20Ta%20Khong%20Thuoc%20Ve%20Nhau%20-%20Son%20Tung.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1490266502/v1/album/s2/0/19/32/19956023.jpg?v=1490266502',
       name: 'Chúng Ta Không Thuộc Về Nhau',
       singer: 'Sơn Tùng M-TP',
@@ -141,7 +141,7 @@ const playListData = [
     },
     {
       id: 9,
-      uri: "https://data22.chiasenhac.com/downloads/1546/4/1545950-10687abf/m4a/Anh%20Sai%20Roi%20-%20Son%20Tung%20M-TP.m4a",
+      uri: "https://data22.chiasenhac.com/downloads/1546/5/1545950-10687abf/m4a/Anh%20Sai%20Roi%20-%20Son%20Tung%20M-TP.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1506414310/v1/album/s2/0/19/738/20679343.jpg?v=1506414310',
       name: 'Anh Sai Rồi',
       singer: 'Sơn Tùng M-TP',
@@ -150,7 +150,7 @@ const playListData = [
     },
     {
       id: 10,
-      uri: "https://data53.chiasenhac.com/downloads/1065/4/1064301-d2e5f10b/320/Con%20Mua%20Ngang%20Qua%20-%20Son%20Tung%20M-TP.mp3",
+      uri: "https://data53.chiasenhac.com/downloads/1065/5/1064301-d2e5f10b/320/Con%20Mua%20Ngang%20Qua%20-%20Son%20Tung%20M-TP.mp3",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1504865707/v1/album/s2/0/19/738/20679343.jpg?v=1504865707',
       name: 'Cơn Mưa Ngang Qua',
       singer: 'Sơn Tùng M-TP',
@@ -159,7 +159,7 @@ const playListData = [
     },
     {
       id: 11,
-      uri: "https://data59.chiasenhac.com/downloads/1256/4/1255159-37f990f5/m4a/Thu%20Cuoi%20-%20Yanbi_%20Mr_T_%20Hang%20BingBoong.m4a",
+      uri: "https://data59.chiasenhac.com/downloads/1256/5/1255159-37f990f5/m4a/Thu%20Cuoi%20-%20Yanbi_%20Mr_T_%20Hang%20BingBoong.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1/v1/artists/s2/0/0/0/647.jpg?v=1',
       name: 'Thu Cuối',
       singer: 'Hằng BingBoong, Yanbi, Mr.T',
@@ -168,7 +168,7 @@ const playListData = [
     },
    {
       id: 12,
-      uri: "https://data51.chiasenhac.com/downloads/1010/4/1009775-4463bd86/m4a/Dong%20Thoi%20Gian%20-%20Nguyen%20Hai%20Phong.m4a",
+      uri: "https://data51.chiasenhac.com/downloads/1010/5/1009775-4463bd86/m4a/Dong%20Thoi%20Gian%20-%20Nguyen%20Hai%20Phong.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1/v1/artists/s2/0/0/0/186.jpg?v=1',
       name: 'Dòng Thời Gian',
       singer: 'Nguyễn Hải Phong',
@@ -177,7 +177,7 @@ const playListData = [
     },
     {
       id: 13,
-      uri: "https://data51.chiasenhac.com/downloads/1002/4/1001372-9f61541c/m4a/Tim%20Lai%20Bau%20Troi%20-%20Tuan%20Hung.m4a",
+      uri: "https://data51.chiasenhac.com/downloads/1002/5/1001372-9f61541c/m4a/Tim%20Lai%20Bau%20Troi%20-%20Tuan%20Hung.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1464657580/v1/album/s2/0/0/22/22705.jpg?v=1464657580',
       name: 'Tìm Lại Bầu Trời ',
       singer: 'Tuấn Hưng',
@@ -186,7 +186,7 @@ const playListData = [
     },
     {
       id: 14,
-      uri: "https://data51.chiasenhac.com/downloads/1002/4/1001372-9f61541c/m4a/Tim%20Lai%20Bau%20Troi%20-%20Tuan%20Hung.m4a",
+      uri: "https://data51.chiasenhac.com/downloads/1002/5/1001372-9f61541c/m4a/Tim%20Lai%20Bau%20Troi%20-%20Tuan%20Hung.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1492072708/v1/album/s2/0/0/24/24703.jpg?v=1492072708',
       name: 'Độc Thoại ',
       singer: 'Tuấn Hưng',
@@ -196,7 +196,7 @@ const playListData = [
   
    {
       id: 15,
-      uri: "https://data53.chiasenhac.com/downloads/1088/4/1087977-edbad9ee/m4a/Tru%20Mua%20-%20HKT.m4a",
+      uri: "https://data53.chiasenhac.com/downloads/1088/5/1087977-edbad9ee/m4a/Tru%20Mua%20-%20HKT.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1480391600/v1/album/s2/0/0/22/23263.jpg?v=1480391600',
       name: 'Trú Mưa ',
       singer: 'HKT',
@@ -206,7 +206,7 @@ const playListData = [
   
    {
       id: 16,
-      uri: "https://data54.chiasenhac.com/downloads/1095/4/1094479-683e8b74/m4a/Mua%20Cua%20Ngay%20Xua%20-%20Ho%20Quang%20Hieu.m4a",
+      uri: "https://data54.chiasenhac.com/downloads/1095/5/1094479-683e8b74/m4a/Mua%20Cua%20Ngay%20Xua%20-%20Ho%20Quang%20Hieu.m4a",
       picture: 'https://109cdf7de.vws.vegacdn.vn/kv0puCNE4oNNfn7YhOpK/1505443804/v1/album/s2/0/0/28/29472.jpg?v=1505443804',
       name: 'Mưa Của Ngày Xưa ',
       singer: 'Hồ Quang Hiếu',
@@ -215,5 +215,12 @@ const playListData = [
     },
   ]
   
+  const user = {
+    id: 0,
+    avatar: "https://cdn2.vectorstock.com/i/1000x1000/10/86/music-equaliser-wave-vector-171086.jpg",
+    username: 'ruong',
+    fullname: 'NTR',
+    createdAt: 1587917439178
+  }
 
-  export {playListData, singerData, topicData, forYou, list, songs}
+  export {playListData, singerData, topicData, forYou, list, songs, user}

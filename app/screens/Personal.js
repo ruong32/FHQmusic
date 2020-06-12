@@ -1,11 +1,10 @@
 import React from 'react';
-import { SafeAreaView, View, Text, StatusBar, TouchableOpacity, Platform } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import { ListItem } from 'react-native-elements'
+import { SafeAreaView, View, Text, StatusBar, Image, TouchableOpacity, Platform } from 'react-native';
+import { ListItem, Button } from 'react-native-elements'
 import styles from '../styles/Personal';
-import SearchBar from '../components/SearchBar';
-import {list} from '../data/data';
+import { list, user, songs } from '../data/data';
 import MiniPlayer from '../components/MiniPlayer';
+import ListSongs from '../components/ListSongs';
 
 export default class Personal extends React.Component {
   render(){
@@ -13,18 +12,32 @@ export default class Personal extends React.Component {
     return(
       <SafeAreaView style={{flex: 1, backgroundColor: '#0D47A1'}}>
         <View style={styles.container}>
-          <View>
+          <View style={{flex: 1}}>
             <StatusBar barStyle="default" translucent/>
-            <View>
-              <SearchBar navigation={this.props.navigation}/>
-            </View>
             <View style={styles.titleTextContainer}>
               <Text style={styles.titleText}>Cá nhân</Text>
             </View>
-            <View style={{backgroundColor: 'white'}}>
+            <View style={{flexDirection: 'row', backgroundColor: 'white', marginBottom: 10}}>
+              {/* <SearchBar navigation={this.props.navigation}/> */}
+              <View>
+                <Image style={{height: 80, width: 80, margin: 15, borderRadius: 40}} source={{uri: user.avatar}}/>
+              </View>
+              <View style={{justifyContent: "center"}}>
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>Username: {user.username}</Text>
+                <Text style={{marginVertical: 3}}>Nickname: {user.fullname}</Text>
+                <Button 
+                  containerStyle={{marginTop: 5}}
+                  titleStyle={{fontSize: 14}}
+                  buttonStyle={{padding: 5, width: 80, borderRadius: 5}}
+                  title='Đăng xuất' 
+                  onPress={() => navigate("Login")} 
+                />
+              </View>
+            </View>
+            <View style={{backgroundColor: 'white', marginBottom: 10}}>
             {list.map((item, i) => {
               return (
-                <Animatable.View key={i} animation="fadeInDown" delay={i*100} duration={500}>
+                <View key={i} >
                   <TouchableOpacity 
                     onPress={()=> navigate('SongList', {title: item.title, type: item.type})}
                     activeOpacity={0.3}
@@ -37,9 +50,18 @@ export default class Personal extends React.Component {
                       chevron
                     />
                   </TouchableOpacity>
-                </Animatable.View>  
+                </View>  
               )
             })}
+            </View>
+            <View style={{backgroundColor: 'white', flex: 1}}>
+              <ListItem
+                title='Lịch sử'
+                leftIcon={{name: 'history'}}
+              />
+              <View style={{flex: 1}}>
+                <ListSongs type="history" navigate={navigate}/>
+              </View>
             </View>
           </View>
         <MiniPlayer navigate={navigate}/>
