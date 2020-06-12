@@ -11,7 +11,7 @@ export default class SongList extends React.Component {
     const {navigate} = this.props.navigation;
     return(
       <React.Fragment>
-        <SafeAreaView style={{backgroundColor: '#0D47A1'}}/>
+        <SafeAreaView style={{backgroundColor: '#0D47A1', paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}/>
         <SafeAreaView style={{flex: 1, backgroundColor: '#eeeeee'}}>
           <View style={styles.container}>
             <View style={{flex: 1}}>

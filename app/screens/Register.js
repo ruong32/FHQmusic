@@ -10,7 +10,7 @@ export default class Register extends Component {
 		const {navigate} = this.props.navigation;
 		return (
 			<SafeAreaView style={styles.container}>
-				<StatusBar barStyle="light-content"/>
+				<StatusBar barStyle="default" translucent/>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 					<View style={styles.container}>
 						<View style={styles.top}>

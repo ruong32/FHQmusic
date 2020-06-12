@@ -10,7 +10,7 @@ export default class Personal extends React.Component {
   render(){
     const {navigate} = this.props.navigation;
     return(
-      <SafeAreaView style={{flex: 1, backgroundColor: '#0D47A1'}}>
+      <SafeAreaView style={{flex: 1, backgroundColor: '#0D47A1', paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
         <View style={styles.container}>
           <View style={{flex: 1}}>
             <StatusBar barStyle="default" translucent/>
