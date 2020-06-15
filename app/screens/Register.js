@@ -6,6 +6,24 @@ import { StyleSheet, Text, View, Image,
 
 
 export default class Register extends Component {
+	state = {
+		username: '',
+		password: ''
+	}
+
+	register = async () => {
+		const response = await fetch(`https://toeic-test-server.herokuapp.com/music/register`,{
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({username: this.state.username, password: this.state.password})
+		});
+		const data = await response.json();
+		this.props.navigation.navigate("Login");
+	}
+
 	render() {
 		const {navigate} = this.props.navigation;
 		return (
@@ -58,7 +76,7 @@ export default class Register extends Component {
 								</TextInput>
 							</View>
 
-							<TouchableOpacity style={styles.buttonContainer}>
+							<TouchableOpacity style={styles.buttonContainer} onPress={() => this.register()}>
 								<Text style={styles.buttonText}>Đăng Ký</Text>
 							</TouchableOpacity>
 							

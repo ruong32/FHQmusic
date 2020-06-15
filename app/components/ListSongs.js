@@ -22,7 +22,7 @@ export default class ListSongs extends React.Component {
     const timeOffset = ((Date.now()) - time)/1000;
     if (timeOffset < 86400) {
       return 'Hôm nay';
-    } else if (timeOffset < 172.800){
+    } else if (timeOffset < 172800){
       return 'Hôm qua';
     } else if (timeOffset < 259200){
       return 'Hôm kia';
