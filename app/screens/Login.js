@@ -9,6 +9,8 @@ import { CheckBox } from 'react-native-elements';
 export default class Login extends Component {
 	state = {
 		isChecked : false,
+		username: '',
+		password: ''
 	};
 	setSelection = (value)=> {
 		// console.log(value)
@@ -16,7 +18,16 @@ export default class Login extends Component {
 	} 
 
 	login = () => {
-		this.props.navigation.navigate("TabNavigator");
+		const response = await fetch(`https://toeic-test-server.herokuapp.com/music/login`,{
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({username: this.state.username, password: this.state.password})
+		});
+    	const data = await response.json();
+		this.props.navigation.navigate("TabNavigator", {userData: data});
 	}
 	
 	render() {
