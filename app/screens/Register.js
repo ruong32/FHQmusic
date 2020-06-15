@@ -6,16 +6,34 @@ import { StyleSheet, Text, View, Image,
 
 
 export default class Register extends Component {
+	state = {
+		username: '',
+		password: ''
+	}
+
+	register = async () => {
+		const response = await fetch(`https://toeic-test-server.herokuapp.com/music/register`,{
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({username: this.state.username, password: this.state.password})
+		});
+		const data = await response.json();
+		this.props.navigation.navigate("Login");
+	}
+
 	render() {
 		const {navigate} = this.props.navigation;
 		return (
 			<SafeAreaView style={styles.container}>
-				<StatusBar barStyle="light-content"/>
+				<StatusBar barStyle="default" translucent/>
 				<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 					<View style={styles.container}>
 						<View style={styles.top}>
 							<Text style={styles.title}>FHQ Music</Text>
-							<Text>Free and High Quality</Text>
+							<Text style={{color: "white"}}>Free and High Quality</Text>
 						</View>
 
 						<View style={styles.mid}>
@@ -58,7 +76,7 @@ export default class Register extends Component {
 								</TextInput>
 							</View>
 
-							<TouchableOpacity style={styles.buttonContainer}>
+							<TouchableOpacity style={styles.buttonContainer} onPress={() => this.register()}>
 								<Text style={styles.buttonText}>Đăng Ký</Text>
 							</TouchableOpacity>
 							
@@ -81,7 +99,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'stretch',
-		backgroundColor: 'rgb(243,195,176)'		
+		backgroundColor: '#201a27'		
 	},
 	top: {
 		flex: 3,
@@ -103,7 +121,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	title: {
-		color: 'black',
+		color: 'white',
 		fontSize: 36,
 		textAlign: 'center',
 		paddingTop: 80,
@@ -112,7 +130,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 10,
 		borderRadius: 10,
 		marginTop: 20,
-		backgroundColor: 'rgba(255,255,255,0.4)'//a = alpha = opacity
+		backgroundColor: 'white'//a = alpha = opacity
 	},
 	input: {
 		width: 280,
@@ -131,7 +149,7 @@ const styles = StyleSheet.create({
 	},
 	buttonText: {
 		textAlign: 'center',
-		color: 'rgb(32, 53, 70)',
+		color: 'white',
 		fontWeight: 'bold',
 		fontSize: 18,
 	},
@@ -146,7 +164,8 @@ const styles = StyleSheet.create({
 		margin: 8,
 	},
 	textbot: {
-		margin:80,
+		color: "white",
+		margin: 50,
 	}
 
 	
