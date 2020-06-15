@@ -7,6 +7,20 @@ import {singerData, playListData, topicData, forYou} from '../data/data';
 import MiniPlayer from '../components/MiniPlayer';
 
 export default class Home extends React.Component {
+  state = {
+    isFetching: true,
+    data = null
+  }
+
+  async componentWillMount(){
+    const response = await fetch(`https://toeic-test-server.herokuapp.com/music/home`) // trả về tất cả bài hát, playlist, ca sĩ
+    const data = await response.json(); // data: {songs, singers, playlist}
+    this.setState({
+      isFetching: false,
+      data: data
+    })
+  }
+
   render(){
     return(
       <SafeAreaView style={{flex: 1, backgroundColor: '#0D47A1', paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}>
