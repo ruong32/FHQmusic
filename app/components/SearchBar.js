@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
-import { View, TextInput, Dimensions } from 'react-native'
+import { View, TextInput, Dimensions, TouchableOpacity, Image } from 'react-native'
 import styles from './ComponentStyles/SearchBar';
 
 const screenHeight = Dimensions.get('window').height;
@@ -30,7 +30,11 @@ export default class SearchBar extends React.Component {
               value={searchText}
             />   
         </View>
-        <View style={[styles.profileIcon, this.props.profileIconStyle]}></View>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("Profile")}>
+          <View>
+            <Image style={styles.profileImage} source={{uri: 'https://thumbs.dreamstime.com/b/headphone-logo-design-template-headphone-logo-design-template-115058304.jpg'}}/>
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
