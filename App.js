@@ -13,6 +13,7 @@ import Profile from './app/screens/Profile';
 import Player from './app/screens/Player';
 import { Provider } from 'react-redux';
 import store from './app/store/index';
+import Search from './app/screens/Search';
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +28,12 @@ function TabNavigator() {
             iconName = 'home';
             color = focused? 'black' : 'gray';
             size = 30;
-          } else if (route.name === 'Cá nhân') {
+          } else if (route.name === 'Tìm kiếm') {
+            iconName = 'search';
+            color = focused? 'black' : 'gray';
+            size = 30;
+          }
+          else if (route.name === 'Cá nhân') {
             iconName = 'person';
             color = focused? 'black' : 'gray';
             size = 30;
@@ -37,6 +43,7 @@ function TabNavigator() {
       })}
     >
       <Tab.Screen name="Trang chủ" component={Home}/>
+      <Tab.Screen name="Tìm kiếm" component={Search}/>
       <Tab.Screen name="Cá nhân" component={Personal} />
     </Tab.Navigator>
   );
