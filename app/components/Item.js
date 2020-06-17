@@ -36,12 +36,11 @@ class Item extends React.Component {
     this.props.navigate("Player", {songPos: index, playlist: this.props.data});
   }
 
-  press = (index) => {
-    console.log(index, this.props.data);
-    if (this.props.type === 'list'){
-      this.props.navigate('PlaylistComponent');
-    }else if (this.props.type === 'song'){
+  pressItem = index => {
+    if (this.props.type === 'song'){
       this.playSong(index);
+    } else {
+      this.props.navigate('PlaylistComponent', {type: this.props.type, data: this.props.data[index]});
     }
   }
 
@@ -57,7 +56,7 @@ class Item extends React.Component {
           scrollEnabled={this.props.scrollEnabled}
         >
           {this.props.data.map((item, index) => (
-            <TouchableOpacity key={index.toString()} activeOpacity={0.5} onPress={() => this.press(index)}>
+            <TouchableOpacity key={index.toString()} activeOpacity={0.5} onPress={() => this.pressItem(index)}>
               <View style={[styles.item, this.props.itemStyle]}>
                 <Image style={[styles.itemPicture, this.props.itemPictureStyle]} source={{
                   uri: item.picture,

@@ -49,7 +49,7 @@ class Home extends React.Component {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({songId: this.state.data[index]._id})
+				body: JSON.stringify({songId: this.state.data.songs[index]._id})
       });
     }
     this.props.navigation.navigate("Player", {songPos: index, playlist: this.state.data.songs});
@@ -90,7 +90,7 @@ class Home extends React.Component {
                 scrollEnabled={false}
                 pagingEnabled={false}
                 navigate={this.props.navigation.navigate}
-                type='list'
+                type='playlist'
               />
               <Item 
                 category="Ca sĩ" 
@@ -99,7 +99,7 @@ class Home extends React.Component {
                 pagingEnabled={false}
                 itemPictureStyle={styles.singerPictureStyle}
                 navigate={this.props.navigation.navigate}
-                type='list'
+                type='singer'
               />
               <Item 
                 category="Chủ đề"
@@ -107,7 +107,7 @@ class Home extends React.Component {
                 horizontal={true}
                 pagingEnabled={false}
                 navigate={this.props.navigation.navigate}
-                type='list'
+                type='topic'
               />
               <View style={styles.song}>
                 <Text style={styles.titleText}>Bài hát</Text>
