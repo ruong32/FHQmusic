@@ -23,7 +23,8 @@ export default StyleSheet.create({
     width: device.width*0.2, 
     height: device.width*0.2,
     marginVertical: device.width*0.03,
-    marginHorizontal: device.width*0.03
+    marginHorizontal: device.width*0.03,
+    borderRadius: 5
   },
   songInfoContainer: {
     marginTop: device.width*0.03,
@@ -39,7 +40,7 @@ export default StyleSheet.create({
     fontSize: device.width*0.05
   },
   singer: {
-
+    color: 'gray'
   },
   dayOffsetContainer: {
     marginHorizontal: device.width*0.02,

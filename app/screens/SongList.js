@@ -21,7 +21,7 @@ export default class SongList extends React.Component {
                 centerText={routeParams.title}
               />
               <View style={styles.songContainer}>
-                <ListSongs type={routeParams.type} navigate={navigate}/>
+                <ListSongs type={routeParams.type} navigate={navigate} data={routeParams.data}/>
               </View>
             </View>
             <MiniPlayer navigate={navigate}/>

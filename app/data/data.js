@@ -215,12 +215,14 @@ const playListData = [
     },
   ]
   
-  const user = {
+  const defaultUser = {
     id: 0,
-    avatar: "https://cdn2.vectorstock.com/i/1000x1000/10/86/music-equaliser-wave-vector-171086.jpg",
-    username: 'ruong',
-    fullname: 'NTR',
-    createdAt: 1587917439178
+    username: 'Khách',
+    nickname: 'Khách',
+    avatar: 'https://www.macworld.co.uk/cmsdata/features/3612963/how_to_get_music_on_iphone_1600home_thumb900_1-1.jpg',
+    favorite: [],
+    history: [],
+    mySong: []
   }
 
-  export {playListData, singerData, topicData, forYou, list, songs, user}
+  export {playListData, singerData, topicData, forYou, list, songs, defaultUser}

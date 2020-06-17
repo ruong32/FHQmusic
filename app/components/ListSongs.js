@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, View, Text, Image, TouchableOpacity } from 'react-native';
+import { FlatList, View, Text, Image, TouchableOpacity, AsyncStorage } from 'react-native';
 import  * as Animatable from 'react-native-animatable';
 import styles from './ComponentStyles/ListSongs';
 import {
@@ -10,9 +10,12 @@ import {
 } from 'react-native-popup-menu';
 import { Icon } from 'react-native-elements';
 import { device } from '../config/ScreenDimensions';
-import { songs } from '../data/data';
+import { List } from 'react-native-paper';
+import { addSongToHistory } from '../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class ListSongs extends React.Component {
+class ListSongs extends React.Component {
   state = {
     dayOffset: '',
     playlist: []
@@ -33,7 +36,17 @@ export default class ListSongs extends React.Component {
     } else return new Date(time).toLocaleString();
   }
 
-  playSong = index => {
+  playSong = async index => {
+    const userId = await AsyncStorage.getItem('user');
+    fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({userId: userId, songId: this.props.data[index]._id})
+    });
+    this.props.addSongToHistory(this.props.data[index])
     this.props.navigate("Player", {songPos: index, playlist: this.state.playlist});
   }
   
@@ -66,7 +79,7 @@ export default class ListSongs extends React.Component {
               <Text style={styles.songName}>{item.name}</Text>
             </View>
             <View style={styles.singerContainer}>
-              <Text style={styles.singer}>{item.singer}</Text>
+              <Text style={styles.singer}>{item.singer.name}</Text>
             </View>
             {this.props.type==='favorite' ? 
             <View style={styles.favoriteIcon}>
@@ -99,16 +112,19 @@ export default class ListSongs extends React.Component {
   }
 
   render(){
-    if (this.props.type === 'songs'){
-      this.state.playlist = songs.sort((a, b) => {
-        let nameA = a.name.toUpperCase();
-        let nameB = b.name.toUpperCase();
-        return nameA.localeCompare(nameB);
-      });
-    } else if (this.props.type === 'favorite') {
-      this.state.playlist = songs.filter(item => item.favorite==1)
-    } else if (this.props.type === 'history') {
-      this.state.playlist = songs.sort((a, b) => b.latestListening - a.latestListening);
+    if (this.props.type === 'history'){
+      this.state.playlist = this.props.data.map(item => ({
+        _id: item._id._id,
+        name: item._id.name,
+        picture: item._id.picture,
+        singer: item._id.singer,
+        topic: item._id.topic,
+        uri: item._id.uri,
+        view: item._id.view,
+        latestListening: item.latestListening
+      }))
+    }else{
+      this.state.playlist = this.props.data
     }
     return (
       <FlatList
@@ -120,3 +136,13 @@ export default class ListSongs extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListSongs);

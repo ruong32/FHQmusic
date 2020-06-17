@@ -60,7 +60,13 @@ function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="TabNavigator" component={TabNavigator} />
             <Stack.Screen name="SongList" component={SongList} />
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen 
+              name="Login" 
+              component={Login} 
+              options={{
+                ...TransitionPresets.ScaleFromCenterAndroid
+              }}
+            />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen 
