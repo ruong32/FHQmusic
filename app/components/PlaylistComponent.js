@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import VibrancyView, { BlurView } from 'react-native-blur';
 import { device } from '../config/ScreenDimensions';
 import SongsComponent from './SongsComponent';
 export default class PlaylistComponent extends React.Component {
@@ -62,7 +61,6 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        fontFamily: 'notoserif',
         fontWeight: 'bold',
         fontSize: 20,
         color: '#ffffff'

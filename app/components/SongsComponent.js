@@ -233,6 +233,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#737373',
   },
+  title: {
+    fontSize: 18
+  },
   iconContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -278,7 +281,7 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 15,
     color: '#000',
-    fontSize: 20,
+    fontSize: 16,
   },
   playerContainer: {
     width: '100%',

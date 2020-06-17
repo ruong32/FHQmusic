@@ -1,11 +1,48 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, Keyboard, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, Keyboard, TouchableOpacity, AsyncStorage } from 'react-native';
 import styles from './ComponentStyles/Item';
 import PropTypes from 'prop-types';
+import { addSongToHistory } from '../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class Item extends React.Component {
+class Item extends React.Component {
   constructor(props){
     super(props);
+  }
+
+  playSong = async index => {
+    const userId = await AsyncStorage.getItem('user');
+    if (userId){
+      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({userId: userId, songId: this.props.data[index]._id})
+      });
+      this.props.addSongToHistory(this.props.data[index])
+    }else{
+      fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({songId: this.props.data[index]._id})
+      });
+    }
+    this.props.navigate("Player", {songPos: index, playlist: this.props.data});
+  }
+
+  press = (index) => {
+    console.log(index, this.props.data);
+    if (this.props.type === 'list'){
+      this.props.navigate('PlaylistComponent');
+    }else if (this.props.type === 'song'){
+      this.playSong(index);
+    }
   }
 
   render(){
@@ -20,7 +57,7 @@ export default class Item extends React.Component {
           scrollEnabled={this.props.scrollEnabled}
         >
           {this.props.data.map((item, index) => (
-            <TouchableOpacity key={index.toString()} activeOpacity={0.5}>
+            <TouchableOpacity key={index.toString()} activeOpacity={0.5} onPress={() => this.press(index)}>
               <View style={[styles.item, this.props.itemStyle]}>
                 <Image style={[styles.itemPicture, this.props.itemPictureStyle]} source={{
                   uri: item.picture,
@@ -53,3 +90,9 @@ Item.defaultProps = {
   pagingEnabled: true,
   data: [],
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(Item);
