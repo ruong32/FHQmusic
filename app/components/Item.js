@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, Keyboard } from 'react-native';
+import { View, Text, Image, ScrollView, Keyboard, TouchableOpacity } from 'react-native';
 import styles from './ComponentStyles/Item';
 import PropTypes from 'prop-types';
 
@@ -16,16 +16,18 @@ export default class Item extends React.Component {
           horizontal={this.props.horizontal}
           onScroll={Keyboard.dismiss}
           scrollEventThrottle={0}
-          pagingEnabled={true}
+          pagingEnabled={this.props.pagingEnabled}
           scrollEnabled={this.props.scrollEnabled}
         >
           {this.props.data.map((item, index) => (
-          <View key={index.toString()} style={[styles.item, this.props.itemStyle]}>
-            <Image style={[styles.itemPicture, this.props.itemPictureStyle]} source={{
-              uri: item.picture,
-            }}/>
-            <Text style={[styles.itemName, this.props.itemNameStyle]}>{item.name}</Text>
-          </View>
+            <TouchableOpacity key={index.toString()} activeOpacity={0.5}>
+              <View style={[styles.item, this.props.itemStyle]}>
+                <Image style={[styles.itemPicture, this.props.itemPictureStyle]} source={{
+                  uri: item.picture,
+                }}/>
+                <Text style={[styles.itemName, this.props.itemNameStyle]}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>     
@@ -48,5 +50,6 @@ Item.propTypes = {
 Item.defaultProps = {
   horizontal: false,
   scrollEnabled: true,
+  pagingEnabled: true,
   data: [],
 }

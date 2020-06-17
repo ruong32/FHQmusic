@@ -19,9 +19,11 @@ export default StyleSheet.create({
   itemPicture: {
     height: device.height*0.12,
     width: device.width*0.28,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    borderRadius: 5
   },
   itemName: {
+    paddingTop: 3,
     alignSelf: 'center'
   }
 });

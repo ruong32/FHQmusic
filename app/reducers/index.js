@@ -1,7 +1,8 @@
 import {combineReducers} from 'redux';
-import { player, updateSong } from './player';
+import { player, updateSong, user } from './player';
 
 export default combineReducers({
   player: player,
-  updateSong: updateSong
+  updateSong: updateSong,
+  user: user
 });

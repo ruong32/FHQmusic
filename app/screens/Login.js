@@ -1,14 +1,16 @@
-import React, { Component, useState } from 'react'
-import { StyleSheet, Text, View, Image, 
-	TouchableWithoutFeedback, StatusBar,
-	TextInput, SafeAreaView, Keyboard, TouchableOpacity,
-	KeyboardAvoidingView, Item, Platform } from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, AsyncStorage } from 'react-native';
 import { CheckBox } from 'react-native-elements';
+import { setUser } from '../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 
-export default class Login extends Component {
+class Login extends Component {
 	state = {
+		isLogging: false,
 		isChecked : false,
+		isWrong: false,
 		username: '',
 		password: ''
 	};
@@ -17,17 +19,26 @@ export default class Login extends Component {
 		this.setState({isChecked: !value})
 	} 
 
-	login = () => {
-		const response = await fetch(`https://toeic-test-server.herokuapp.com/music/login`,{
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({username: this.state.username, password: this.state.password})
-		});
-    	const data = await response.json();
-		this.props.navigation.navigate("TabNavigator", {userData: data});
+	login = async () => {
+		if (this.state.username !== '' && this.state.password !== ''){
+			this.setState({isLogging: true, isWrong: false});
+			const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/login`,{
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({username: this.state.username, password: this.state.password})
+			});
+			const data = await response.json();
+			if (!data){
+				this.setState({isLogging: false, isWrong: true});
+			} else {
+				await AsyncStorage.setItem('user', data._id);
+				this.props.setUser(data);
+				this.props.navigation.navigate("TabNavigator");
+			}
+		}
 	}
 	
 	render() {
@@ -41,8 +52,8 @@ export default class Login extends Component {
 							<Text style={styles.title}>FHQ Music</Text>
 							<Text style={{color: "white"}}>Free and High Quality</Text>
 						</View>
-
 						<View style={styles.mid}>
+							{this.state.isWrong? <Text style={{fontSize: 15, color: 'red'}}>Tài khoản hoặc mật khẩu không đúng</Text> : null}
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
@@ -51,6 +62,7 @@ export default class Login extends Component {
 									textContentType='emailAddress'
 									keyboardType='email-address'
 									returnKeyType='next'
+									onChangeText={text => this.setState({username: text})}
 									onSubmitEditing={()=> this.refs.txtPassword.focus()}>
 								</TextInput>
 							</View>
@@ -61,6 +73,7 @@ export default class Login extends Component {
 									placeholder="Enter your password"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									returnKeyType='go'
+									onChangeText={text => this.setState({password: text})}
 									secureTextEntry={true}
 									ref={"txtPassword"}>
 								</TextInput>
@@ -75,8 +88,8 @@ export default class Login extends Component {
 								<Text style={styles.label}>Nhớ tài khoản ?</Text>
 							</View>
 
-							<TouchableOpacity style={styles.buttonContainer} onPress={() => this.login()}>
-								<Text style={styles.buttonText}>Đăng Nhập</Text>
+							<TouchableOpacity disabled={this.state.isLogging} style={styles.buttonContainer} onPress={() => this.login()}>
+								<Text style={styles.buttonText}>{this.state.isLogging ? "Xin chờ" : "Đăng Nhập"}</Text>
 							</TouchableOpacity>
 							
 
@@ -94,6 +107,13 @@ export default class Login extends Component {
 		)
 	}
 }
+
+const mapDispatchToProps = (dispatch) => ({
+	setUser: bindActionCreators(setUser, dispatch)
+  });
+  
+  export default connect(null, mapDispatchToProps)(Login);
+
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,

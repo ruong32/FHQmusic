@@ -32,9 +32,44 @@ export default StyleSheet.create({
     borderRadius: device.height*0.13*0.5
   },
   singerStyle: {
-    marginLeft: (device.width-device.height*0.13*3)/4
+    marginLeft: (device.width-device.height*0.15*3)/4
   },
   suggestStyle: {
    marginLeft: 0 
+  },
+  song: {
+    marginTop: device.height*0.01,
+    backgroundColor: 'white'
+  },
+  titleText:{
+    height: device.height*0.04,
+    fontSize: device.height*0.03,
+    marginLeft: device.width*0.02,
+  },
+  songContainer:{
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+  },
+  songImage:{
+    width: device.width*0.2, 
+    height: device.width*0.2,
+    marginVertical: device.width*0.03,
+    marginHorizontal: device.width*0.03,
+    borderRadius: 5
+  },
+  songInfoContainer: {
+    marginTop: device.width*0.03,
+    width: device.width*0.6,
+  },
+  songName: {
+    fontSize: device.width*0.05
+  },
+  singer: {
+    color: 'gray'
+  },
+  optionIcon: {
+    height: device.width*0.27,
+    width: device.width*0.08,
+    justifyContent: 'center',
   }
 });

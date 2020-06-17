@@ -185,7 +185,7 @@ class Player extends React.Component {
         <View style={styles.header}>
           <TouchableOpacity onPress={() => this._goBack()} style={{flexDirection: 'row'}}>
             <Ionicons style={styles.downButton} name="ios-arrow-down" size={35}></Ionicons>
-            <Text style={styles.song}>{this.props.player.currentSong.name} - {this.props.player.currentSong.singer}</Text>
+            <Text style={styles.song}>{this.props.player.currentSong.name} - {this.props.player.currentSong.singer.name}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.image}>
