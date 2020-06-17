@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'stretch',
-		backgroundColor: '#201a27'		
+		backgroundColor: '#4899ea'		
 	},
 	top: {
 		flex: 3,
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 		borderRadius:6,
 		justifyContent:'center',
 		alignItems: 'center',
-		marginTop: 20,
+		marginTop: 35,
 
 	},
 	buttonText: {
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
 	},
 	textbot: {
 		color: "white",
-		margin: 50,
+		marginTop: 65,
 	}
 
 	

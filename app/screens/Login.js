@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, AsyncStorage } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, AsyncStorage, CheckBox } from 'react-native';
 import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -81,8 +80,8 @@ class Login extends Component {
 
 							<View style={styles.checkboxContainer}>
 								<CheckBox
-									checked={this.state.isChecked}
-									onPress={() => this.setSelection(this.state.isChecked)}
+									value={this.state.isChecked}
+									onChange={() => this.setSelection(this.state.isChecked)}
           							style={styles.checkbox}
 								/>
 								<Text style={styles.label}>Nhớ tài khoản ?</Text>
@@ -120,7 +119,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'stretch',
-		backgroundColor: '#201a27'		
+		backgroundColor: '#4899ea'		
 	},
 	top: {
 		flex: 3,
@@ -164,7 +163,7 @@ const styles = StyleSheet.create({
 		borderRadius:6,
 		justifyContent:'center',
 		alignItems: 'center',
-		marginTop: 20,
+		marginTop: 35,
 
 	},
 	buttonText: {
@@ -179,15 +178,17 @@ const styles = StyleSheet.create({
 	},
 	checkbox: {
 		alignSelf: "center",
+		marginLeft: -15,
+		marginTop: 5,
 	},
 	label: {
 		color: "white",
-		marginTop: 18,
-		marginLeft: -15
+		marginTop: 10,
+		
 	},
 	textbot: {
 		color: "white",
-		margin: 50,
+		marginTop: 65,
 	}
 
 	
