@@ -26,7 +26,7 @@ export default class PlaylistComponent extends React.Component {
             if (this.props.route.params.type === 'singer'){
                 response = await fetch(`https://toeic-test-server.herokuapp.com/music/song/singer/${this.props.route.params.data._id}`);
             } else if (this.props.route.params.type === 'topic'){
-                response = await fetch(`https://toeic-test-server.herokuapp.com/music/song/singer/${this.props.route.params.data.name}`); 
+                response = await fetch(`https://toeic-test-server.herokuapp.com/music/song/topic/${this.props.route.params.data.name}`); 
             }
             const data = await response.json();
             songs = data;
