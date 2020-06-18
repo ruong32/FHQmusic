@@ -1,17 +1,10 @@
 import React from 'react';
 import { FlatList, View, Text, Image, TouchableOpacity, AsyncStorage } from 'react-native';
-import  * as Animatable from 'react-native-animatable';
 import styles from './ComponentStyles/ListSongs';
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu';
+import SongOption from './SongOption';
 import { Icon } from 'react-native-elements';
 import { device } from '../config/ScreenDimensions';
-import { List } from 'react-native-paper';
-import { addSongToHistory } from '../actions/index';
+import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -37,9 +30,10 @@ class ListSongs extends React.Component {
   }
 
   playSong = async index => {
+    this.props.navigate("Player", {songPos: index, playlist: this.state.playlist});
     const userId = await AsyncStorage.getItem('user');
     if (userId){
-      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+      const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -47,7 +41,8 @@ class ListSongs extends React.Component {
 				},
 				body: JSON.stringify({userId: userId, songId: this.props.data[index]._id})
       });
-      this.props.addSongToHistory(this.props.data[index])
+      const updatedUser = await response.json();
+      this.props.setUser(updatedUser);
     } else {
       fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
 				method: 'PUT',
@@ -58,7 +53,6 @@ class ListSongs extends React.Component {
 				body: JSON.stringify({songId: this.props.data[index]._id})
       });
     }
-    this.props.navigate("Player", {songPos: index, playlist: this.state.playlist});
   }
   
   renderItem = ({item, index}) => {
@@ -99,22 +93,7 @@ class ListSongs extends React.Component {
             null}
           </View>  
           <View style={styles.optionIcon}>
-            <Menu>
-              <MenuTrigger>
-                <Icon name="more-vert" size={device.width*0.08} />
-              </MenuTrigger>
-              <MenuOptions optionsContainerStyle={{width: 100}}>
-                <MenuOption onSelect={() => alert(`Tùy chọn 1`)} >
-                  <Text>Tùy chọn 1</Text>
-                </MenuOption>
-                <MenuOption onSelect={() => alert(`Tùy chọn 2`)} >
-                  <Text>Tùy chọn 2</Text>
-                </MenuOption>
-                <MenuOption onSelect={() => alert(`Tùy chọn 3`)} >
-                  <Text>Tùy chọn 3</Text>
-                </MenuOption>
-              </MenuOptions>
-            </Menu>
+            <SongOption song={item}/>
           </View>
         </View>
         </TouchableOpacity>
@@ -123,6 +102,7 @@ class ListSongs extends React.Component {
   }
 
   render(){
+    this.state.dayOffset = '';
     if (this.props.type === 'history'){
       this.state.playlist = this.props.data.map(item => ({
         _id: item._id._id,
@@ -153,7 +133,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+  setUser: bindActionCreators(setUser, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListSongs);
