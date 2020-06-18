@@ -15,7 +15,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const {width, height} = Dimensions.get('window');
 import {Surface} from 'react-native-paper';
 import { device } from '../config/ScreenDimensions';
-import { addSongToHistory } from '../actions/index';
+import { setUser } from '../actions/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -109,9 +109,10 @@ class SongsComponent extends Component{
   }
 
   playSong = async index => {
+    this.props.navigation.navigate("Player", {songPos: index, playlist: this.props.songs});
     const userId = await AsyncStorage.getItem('user');
     if (userId){
-      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+      const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -119,7 +120,8 @@ class SongsComponent extends Component{
 				},
 				body: JSON.stringify({userId: userId, songId: this.props.songs[index]._id})
       });
-      this.props.addSongToHistory(this.props.songs[index])
+      const updatedUser = await response.json();
+      this.props.setUser(updatedUser)
     } else {
       fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
 				method: 'PUT',
@@ -130,7 +132,6 @@ class SongsComponent extends Component{
 				body: JSON.stringify({songId: this.props.songs[index]._id})
       });
     }
-    this.props.navigation.navigate("Player", {songPos: index, playlist: this.props.songs});
   };
 
   separator = () => {
@@ -159,7 +160,7 @@ class SongsComponent extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+  setUser: bindActionCreators(setUser, dispatch)
 });
 
 export default connect(null, mapDispatchToProps)(SongsComponent);
