@@ -5,7 +5,7 @@ import {
   Text,
   Dimensions,
   FlatList,
-  TouchableWithoutFeedback,
+  AsyncStorage,
   Image,
   Modal,
   TouchableOpacity,
@@ -15,6 +15,9 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 const {width, height} = Dimensions.get('window');
 import {Surface} from 'react-native-paper';
 import { device } from '../config/ScreenDimensions';
+import { addSongToHistory } from '../actions/index';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class SongData extends Component {
   constructor(props) {
@@ -23,9 +26,6 @@ class SongData extends Component {
       modalVisible: false,
     };
   }
-  playSong = item => {
-    this.props.navigation.navigate('Player', {item: item});
-  };
 
   openModal = () => {
     this.setState({
@@ -40,7 +40,8 @@ class SongData extends Component {
   };
 
   render() {
-    let item = this.props.item;
+    let item = this.props.song.item;
+    let index = this.props.song.index;
     return (
       <View>
         <Modal
@@ -50,33 +51,30 @@ class SongData extends Component {
           animationType="slide">
           <View style={{height: '100%', backgroundColor: 'rgba(0,0,0,0.4)'}}>
             <View style={styles.modal}>
-              <Surface style={styles.surface}>
-                <Image source={{uri: item.img}} style={styles.modalImg} />
-              </Surface>
-
+              <View style={{flex: 1}}>
+                <Surface style={styles.surface}>
+                  <Image source={{uri: item.picture}} style={styles.modalImg} />
+                </Surface>
+              </View>
               <View style={styles.modalData}>
                 <View style={styles.playerContainer}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.subTitle}>{item.subTitle}</Text>
+                  <Text style={styles.title}>{item.name}</Text>
+                  <Text style={styles.subTitle}>{item.singer.name}</Text>
                   <TouchableOpacity style={styles.btn}>
                     <Icon name="play" size={30} color="#fff" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.option}>
                   <Icon name="heart" size={30} color="#f25050" />
-                  <Text style={styles.text}>Add To Favourite</Text>
+                  <Text style={styles.text}>Thêm vào yêu thích</Text>
                 </View>
                 <View style={styles.option}>
                   <Icon name="playlist-plus" size={30} color="#000" />
-                  <Text style={styles.text}>Add To Playlist</Text>
+                  <Text style={styles.text}>Thêm vào Playlist</Text>
                 </View>
                 <View style={styles.option}>
-                  <Icon name="album" size={30} color="#000" />
-                  <Text style={styles.text}>Create Album</Text>
-                </View>
-                <View style={styles.option}>
-                  <Icon name="download" size={30} color="#000" />
-                  <Text style={styles.text}>Download</Text>
+                  <Icon name="plus" size={30} color="#000" />
+                  <Text style={styles.text}>Thêm vào danh sách bài hát</Text>
                 </View>
               </View>
             </View>
@@ -85,7 +83,7 @@ class SongData extends Component {
 
         <TouchableOpacity
           style={styles.songContainer}
-          onPress={() => this.playSong(item)}>
+          onPress={() => this.props.play(index)}>
           <View style={{flexDirection: 'row'}}>
             <Image source={{uri: item.picture}} style={styles.img} />
             <View style={styles.dataContainer}>
@@ -104,10 +102,35 @@ class SongData extends Component {
   }
 }
 
-class SongsComponent extends Component {
+class SongsComponent extends Component{
   constructor(props) {
     super(props);
   }
+
+  playSong = async index => {
+    const userId = await AsyncStorage.getItem('user');
+    if (userId){
+      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({userId: userId, songId: this.props.songs[index]._id})
+      });
+      this.props.addSongToHistory(this.props.songs[index])
+    } else {
+      fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({songId: this.props.songs[index]._id})
+      });
+    }
+    this.props.navigation.navigate("Player", {songPos: index, playlist: this.props.songs});
+  };
 
   separator = () => {
     return <View style={{height: 10, backgroundColor: '#ffffff'}} />;
@@ -124,7 +147,7 @@ class SongsComponent extends Component {
             ItemSeparatorComponent={() => this.separator()}
             renderItem={({item, index}) => {
               return (
-                <SongData item={item} navigation={this.props.navigation} />
+                <SongData song={({item, index})} navigation={this.props.navigation} play={this.playSong} />
               );
             }}
           />
@@ -134,11 +157,16 @@ class SongsComponent extends Component {
   }
 }
 
-export default SongsComponent;
+const mapDispatchToProps = (dispatch) => ({
+  addSongToHistory: bindActionCreators(addSongToHistory, dispatch)
+});
+
+export default connect(null, mapDispatchToProps)(SongsComponent);
 
 const styles = StyleSheet.create({
   container: {
     width: width,
+    marginTop: device.height*0.01,
     backgroundColor: '#fefefe'
   },
   songContainer: {
@@ -201,7 +229,8 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   modalData: {
-    marginTop: 100,
+    flex: 3,
+    marginTop: 0,
   },
   option: {
     height: 50,
@@ -218,7 +247,6 @@ const styles = StyleSheet.create({
   },
   playerContainer: {
     width: '100%',
-    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },

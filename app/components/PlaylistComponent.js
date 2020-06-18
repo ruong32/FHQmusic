@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { device } from '../config/ScreenDimensions';
+import MiniPlayer from '../components/MiniPlayer';
 import SongsComponent from './SongsComponent';
 export default class PlaylistComponent extends React.Component {
     constructor(props) {
@@ -44,35 +45,42 @@ export default class PlaylistComponent extends React.Component {
         }
     }
 
+    _goBack = () => {
+        this.props.navigation.goBack();
+    }
+
     render() {
         return(
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <ImageBackground source={{uri: this.state.playlistPicture}} style={styles.imageBackground} blurRadius={22}>
-                   <TouchableOpacity>
-                        <MaterialIcons name="arrow-back"style={styles.back} size={device.height * 0.038}></MaterialIcons>
-                    </TouchableOpacity> 
-                    <Image source={{uri: this.state.playlistPicture}} style={styles.image}></Image>
-                    <Text style={styles.title}>{this.state.playlistName}</Text>
-                    <Text style={styles.description}>{this.state.playlistDescription}</Text>
-                </ImageBackground>
+        <View style={{flex: 1}}>
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <ImageBackground source={{uri: this.state.playlistPicture}} style={styles.imageBackground} blurRadius={22}>
+                    <TouchableOpacity onPress={() => this._goBack()}>
+                            <MaterialIcons name="arrow-back"style={styles.back} size={device.height * 0.038}></MaterialIcons>
+                        </TouchableOpacity> 
+                        <Image source={{uri: this.state.playlistPicture}} style={styles.image}></Image>
+                        <Text style={styles.title}>{this.state.playlistName}</Text>
+                        <Text style={styles.description}>{this.state.playlistDescription}</Text>
+                    </ImageBackground>
+                </View>
+                <View style={styles.listSong}>
+                    {   
+                        this.state.isFetching? 
+                        <View style={{flex: 1, justifyContent: 'center'}}>
+                            <ActivityIndicator size='large' color='#0D47A1' />
+                        </View>:
+                        <SongsComponent navigation={this.props.navigation} songs={this.state.data}/>
+                    }
+                    {
+                        this.state.noData?
+                        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                            <Text>Không có bài hát</Text>
+                        </View>:
+                        null
+                    }
+                </View>
             </View>
-            <View style={styles.listSong}>
-                {   
-                    this.state.isFetching? 
-                    <View style={{flex: 1, justifyContent: 'center'}}>
-                        <ActivityIndicator size='large' color='#0D47A1' />
-                    </View>:
-                    <SongsComponent navigation={this.props.navigation} songs={this.state.data}/>
-                }
-                {
-                    this.state.noData?
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                        <Text>Không có bài hát</Text>
-                    </View>:
-                    null
-                }
-            </View>
+            <MiniPlayer navigate={this.props.navigation.navigate}/>
         </View>
         );
     }
@@ -82,26 +90,24 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fefefe'
     }, 
-    header: {
-        flex: 4,
+    header: {      
         flexDirection: 'column'
     },
     back: {
-        marginTop: device.height * 0.05,
+        marginTop: device.height * 0.03,
         color: '#ffffff',
         marginLeft: device.width * 0.02
     },
     listSong: {
-        flex: 7,
+        flex: 1,
     },
     imageBackground: {
-        height: device.height * 0.43,
-        width: device.width
+        height: device.width*0.65,
+        width: device.width,
     },
     image: {
         height: device. height * 0.18,
         width: device.height * 0.18,
-        marginTop: device.height * 0.032,
         marginHorizontal: (device.width - device.height * 0.18) / 2,
         borderRadius: 5,
     },
