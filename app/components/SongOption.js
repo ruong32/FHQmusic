@@ -52,7 +52,7 @@ class SongOption extends React.Component {
     }
 
     addToPlaylist = () => {
-        Alert.alert('Sắp có')
+        Alert.alert('Sắp ra mắt')
     }
 
     render(){
