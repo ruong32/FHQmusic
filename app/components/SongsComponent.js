@@ -50,6 +50,7 @@ class SongData extends Component {
           visible={this.state.modalVisible}
           animationType="slide">
           <View style={{height: '100%', backgroundColor: 'rgba(0,0,0,0.4)'}}>
+            <TouchableOpacity activeOpacity={0} style={{flex: 1}} onPress={() => this.closeModal()}/>
             <View style={styles.modal}>
               <View style={{flex: 1}}>
                 <Surface style={styles.surface}>
