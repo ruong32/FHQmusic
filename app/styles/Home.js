@@ -13,7 +13,7 @@ export default StyleSheet.create({
     backgroundColor: '#E0E0E0'
   },
   suggestArea: {
-    marginTop: device.height*0.01,
+    // marginTop: device.height*0.01,
     height: device.height*0.38,
     width: device.width,
     backgroundColor: 'white'
@@ -38,13 +38,14 @@ export default StyleSheet.create({
    marginLeft: 0 
   },
   song: {
-    marginTop: device.height*0.01,
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingTop: 5,
   },
   titleText:{
     height: device.height*0.04,
     fontSize: device.height*0.03,
     marginLeft: device.width*0.02,
+    fontWeight: 'bold'
   },
   songContainer:{
     backgroundColor: '#fff',
@@ -58,7 +59,7 @@ export default StyleSheet.create({
     borderRadius: 5
   },
   songInfoContainer: {
-    marginTop: device.width*0.03,
+    marginTop: device.width*0.045,
     width: device.width*0.6,
   },
   songName: {

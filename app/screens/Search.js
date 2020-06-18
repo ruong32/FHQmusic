@@ -120,8 +120,7 @@ const styles = StyleSheet.create({
   viewStyle: {
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: 'white',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: 'white'
   },
  
 });

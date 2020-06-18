@@ -27,15 +27,18 @@ const playListData = [
   const topicData = [
     {
       picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQRwfB-qpOCUWGWioAlOxTXOdG2HiIS8Eu2PI_0Lh4GgA_8kFdd&usqp=CAU',
-      name: 'Cách mạng'
+      name: 'Cách mạng',
+      description: 'Những ca khúc về chủ đề cách mạng'
     },
     {
       picture: 'https://avatar-nct.nixcdn.com/playlist/2017/12/18/b/4/e/e/1513580321142_500.jpg',
-      name: 'Nhạc trẻ'
+      name: 'Nhạc trẻ',
+      description: 'Những ca khúc đang được giới trẻ yêu thích'
     },
     {
       picture: 'https://znews-photo.zadn.vn/w660/Uploaded/ofh_fdmzsofw/2017_05_17/18403557_754897321354685_5074903081571930249_n.jpg',
-      name: 'Bolero'
+      name: 'Bolero',
+      description: 'Những ca khúc trữ tĩnh sâu lắng'
     },
   ];
 

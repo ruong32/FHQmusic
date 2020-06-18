@@ -38,15 +38,26 @@ class ListSongs extends React.Component {
 
   playSong = async index => {
     const userId = await AsyncStorage.getItem('user');
-    fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
+    if (userId){
+      fetch(`https://toeic-test-server.herokuapp.com/music/user/add-history`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({userId: userId, songId: this.props.data[index]._id})
-    });
-    this.props.addSongToHistory(this.props.data[index])
+      });
+      this.props.addSongToHistory(this.props.data[index])
+    } else {
+      fetch(`https://toeic-test-server.herokuapp.com/music//song/view/anonymous`,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({songId: this.props.data[index]._id})
+      });
+    }
     this.props.navigate("Player", {songPos: index, playlist: this.state.playlist});
   }
   

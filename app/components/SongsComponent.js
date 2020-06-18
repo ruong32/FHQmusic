@@ -16,7 +16,7 @@ const {width, height} = Dimensions.get('window');
 import {Surface} from 'react-native-paper';
 import { device } from '../config/ScreenDimensions';
 
-class SOngData extends Component {
+class SongData extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -87,10 +87,10 @@ class SOngData extends Component {
           style={styles.songContainer}
           onPress={() => this.playSong(item)}>
           <View style={{flexDirection: 'row'}}>
-            <Image source={{uri: item.img}} style={styles.img} />
+            <Image source={{uri: item.picture}} style={styles.img} />
             <View style={styles.dataContainer}>
-              <Text style={styles.songtitle}>{item.title}</Text>
-              <Text style={styles.subTitle}>{item.subTitle}</Text>
+              <Text style={styles.songtitle}>{item.name}</Text>
+              <Text style={styles.subTitle}>{item.singer.name}</Text>
             </View>
             <View style={styles.iconContainer}>
               <TouchableOpacity onPress={() => this.openModal()}>
@@ -114,84 +114,17 @@ class SongsComponent extends Component {
   };
 
   render() {
-    let songs = [
-      {
-        title: 'You Need To Calm Down',
-        subTitle: 'Taylor Swift',
-        link: 'https://data18.chiasenhac.com/downloads/2019/1/2018222-1d3381f4/128/You%20Need%20To%20Calm%20Down%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'The Man',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031028-4263a9f1/128/The%20Man%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: "The Archer",
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2026/1/2025942-bc9aa9c9/128/The%20Archer%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'Soon You ll Get Better',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031026-be49d351/128/Soon%20You___ll%20Get%20Better%20-%20Taylor%20Swift_.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'Miss Americana The Heartbreak',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031024-754a6166/128/Miss%20Americana%20The%20Heartbreak%20Prince%20-%20T.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'ME',
-        subTitle: 'Taylor Swift',
-        link: 'https://data18.chiasenhac.com/downloads/2008/1/2007116-3dad1f5d/128/Me_%20-%20Taylor%20Swift_%20Brendon%20Urie.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'Afterglow',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031012-6bf0c3ba/128/Afterglow%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'Cornelia Street',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031014-4e280438/128/Cornelia%20Street%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'Daylight',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031015-63cd4814/128/Daylight%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'Lover',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031023-d64819f1/128/Lover%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-      {
-        title: 'London Boy',
-        subTitle: 'Taylor Swift',
-        link: 'https://data19.chiasenhac.com/downloads/2032/1/2031021-d98102e3/128/London%20Boy%20-%20Taylor%20Swift.mp3',
-        img: 'https://upload.wikimedia.org/wikipedia/vi/c/cd/Taylor_Swift_-_Lover.png',
-      },
-    ];
     return (
       <View style={styles.container}>
         <View style={{padding: 10, paddingTop: 0}}>
           <FlatList
-            data={songs}
+            data={this.props.songs}
+            keyExtractor={(tem, index) => index.toString()}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => this.separator()}
             renderItem={({item, index}) => {
               return (
-                <SOngData item={item} navigation={this.props.navigation} />
+                <SongData item={item} navigation={this.props.navigation} />
               );
             }}
           />
@@ -232,6 +165,9 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 14,
     color: '#737373',
+  },
+  title: {
+    fontSize: 18
   },
   iconContainer: {
     flexDirection: 'row',
@@ -278,7 +214,7 @@ const styles = StyleSheet.create({
   text: {
     marginLeft: 15,
     color: '#000',
-    fontSize: 20,
+    fontSize: 16,
   },
   playerContainer: {
     width: '100%',
