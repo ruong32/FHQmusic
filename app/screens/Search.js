@@ -1,21 +1,26 @@
 import * as React from 'react';
+import { SafeAreaView,StyleSheet, View, ScrollView, StatusBar, ActivityIndicator, TouchableOpacity, Image, Text,FlatList, AsyncStorage } from 'react-native';
+import styles from '../styles/Home';
+import Item from '../components/Item';
+import {topicData} from '../data/data';
+import MiniPlayer from '../components/MiniPlayer';
 import {
-  Text,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  Platform,
-  StatusBar
-} from 'react-native';
-import { SearchBar, ListItem } from 'react-native-elements';
+  Menu,
+  MenuOptions,
+  MenuOption,
+  MenuTrigger,
+} from 'react-native-popup-menu';
+import { SearchBar, ListItem, Icon } from 'react-native-elements';
 import { songs } from '../data/data';
 
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { isLoading: true, search: '' };
+    this.state = { 
+      isLoading: true, 
+      search: '',
+
+    };
     this.arrayholder = [];
   }
   componentDidMount() {
@@ -31,6 +36,7 @@ export default class Search extends React.Component {
       }
   
 
+  
   search = text => {
     console.log(text);
   };
@@ -39,7 +45,6 @@ export default class Search extends React.Component {
   };
 
   SearchFilterFunction(text) {
-    //passing the inserted text in textinput
     const newData = this.arrayholder.filter(function(item) {
       const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
       const textData = text.toUpperCase();
@@ -47,8 +52,6 @@ export default class Search extends React.Component {
     });
 
     this.setState({
-      //setting the filtered newData on datasource
-      //After setting the data it will automatically re-render the view
       dataSource: newData,
       search: text,
     });
@@ -91,36 +94,52 @@ export default class Search extends React.Component {
             containerStyle = {{ backgroundColor: '#1976D2', height: 65 }}
             inputContainerStyle={{backgroundColor: 'white', height: 45}}
           />
-          <FlatList
-            data={this.state.dataSource}
-            ItemSeparatorComponent={this.ListViewItemSeparator}
-            
-            renderItem={({ item }) => (
-              <ListItem
-                  leftAvatar={{
-                    source: item.picture && { uri: item.picture },
-                  }}
-                  title={item.name}
-                  subtitle={item.singer}
-                  containerStyle={{ borderBottomWidth: 2 }}
-                />
-              
-            )}
-            enableEmptySections={true}
-            style={{ marginTop: 10 }}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          <ScrollView style={styles.scrollView}>
+          <View style={styles.song}>
+                {this.state.dataSource.map((item, index) => (
+                <TouchableOpacity
+                  key={index.toString()}
+                  activeOpacity={0.5}
+                  onPress={() => this.playSong(index)}  
+                >
+                <View style={styles.songContainer}>
+                  <Image style={styles.songImage} source = {{uri: item.picture}}/>
+                  <View style={styles.songInfoContainer}>
+                    <View style={styles.songNameContainer}>
+                      <Text style={styles.songName}>{item.name}</Text>
+                    </View>
+                    <View style={styles.singerContainer}>
+                      <Text style={styles.singer}>{item.singer.name}</Text>
+                    </View>
+                    <View style={styles.singerContainer}>
+                      <Text style={styles.singer}>{item.view} lượt nghe</Text>
+                    </View>
+                  </View>  
+                  <View style={styles.optionIcon}>
+                    <Menu>
+                      <MenuTrigger>
+                        <Icon name="more-vert" size={30} />
+                      </MenuTrigger>
+                      <MenuOptions optionsContainerStyle={{width: 100}}>
+                        <MenuOption onSelect={() => alert(`Tùy chọn 1`)} >
+                          <Text>Tùy chọn 1</Text>
+                        </MenuOption>
+                        <MenuOption onSelect={() => alert(`Tùy chọn 2`)} >
+                          <Text>Tùy chọn 2</Text>
+                        </MenuOption>
+                        <MenuOption onSelect={() => alert(`Tùy chọn 3`)} >
+                          <Text>Tùy chọn 3</Text>
+                        </MenuOption>
+                      </MenuOptions>
+                    </Menu>
+                  </View>
+                </View>
+                </TouchableOpacity>))}
+              </View>
+              </ScrollView>
         </SafeAreaView>
       </React.Fragment>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  viewStyle: {
-    justifyContent: 'center',
-    flex: 1,
-    backgroundColor: 'white'
-  },
- 
-});

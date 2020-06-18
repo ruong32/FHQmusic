@@ -68,7 +68,7 @@ const playListData = [
       name: 'Anh thanh niên',
       singer: 'HuyR',
       favorite: 0,
-      latestListening: 1587917439178,
+      view: 1587917439178,
     },
     { 
       id: 1,
@@ -77,7 +77,7 @@ const playListData = [
       name: 'Vì yêu cứ đâm đầu',
       singer: 'MIN x ĐEN x JUSTATEE',
       favorite: 1,
-      latestListening: 1587267045840,
+      view: 1587267045840,
     },
     {
       id: 2,
@@ -86,7 +86,8 @@ const playListData = [
       name: 'Mặt trời của em ',
       singer: 'Phương Ly',
       favorite: 0,
-      latestListening: 1587917439178,
+      view: 1587917439178,
+      
     },
     {
       id: 3,
@@ -95,7 +96,7 @@ const playListData = [
       name: 'Đã lỡ yêu em nhiều',
       singer: 'JustaTee',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 4,
@@ -104,7 +105,7 @@ const playListData = [
       name: 'Em không sai chúng ta sai',
       singer: 'Erik',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 5,
@@ -113,7 +114,7 @@ const playListData = [
       name: 'Turn It Up',
       singer: 'Monstar',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 6,
@@ -122,7 +123,7 @@ const playListData = [
       name: "I'm A Superman",
       singer: 'BAK (Bảo Kun)',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 7,
@@ -131,7 +132,7 @@ const playListData = [
       name: 'Tình Yêu Màu Nắng',
       singer: 'BigDaddy, Đoàn Thúy Trang',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 8,
@@ -140,7 +141,7 @@ const playListData = [
       name: 'Chúng Ta Không Thuộc Về Nhau',
       singer: 'Sơn Tùng M-TP',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 9,
@@ -149,7 +150,7 @@ const playListData = [
       name: 'Anh Sai Rồi',
       singer: 'Sơn Tùng M-TP',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 10,
@@ -158,7 +159,7 @@ const playListData = [
       name: 'Cơn Mưa Ngang Qua',
       singer: 'Sơn Tùng M-TP',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 11,
@@ -167,7 +168,7 @@ const playListData = [
       name: 'Thu Cuối',
       singer: 'Hằng BingBoong, Yanbi, Mr.T',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
    {
       id: 12,
@@ -176,7 +177,7 @@ const playListData = [
       name: 'Dòng Thời Gian',
       singer: 'Nguyễn Hải Phong',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 13,
@@ -185,7 +186,7 @@ const playListData = [
       name: 'Tìm Lại Bầu Trời ',
       singer: 'Tuấn Hưng',
       favorite: 1,
-      latestListening: 1587756992587,
+      view: 1587756992587,
     },
     {
       id: 14,
@@ -194,7 +195,7 @@ const playListData = [
       name: 'Độc Thoại ',
       singer: 'Tuấn Hưng',
       favorite: 0,
-      latestListening: 1587917439178,
+      view: 1587917439178,
     },
   
    {
@@ -204,7 +205,7 @@ const playListData = [
       name: 'Trú Mưa ',
       singer: 'HKT',
       favorite: 0,
-      latestListening: 1587917439178,
+      view: 1587917439178,
     },
   
    {
@@ -214,7 +215,7 @@ const playListData = [
       name: 'Mưa Của Ngày Xưa ',
       singer: 'Hồ Quang Hiếu',
       favorite: 0,
-      latestListening: 1587917439178,
+      view: 1587917439178,
     },
   ]
   
