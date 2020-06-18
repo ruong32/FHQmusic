@@ -159,7 +159,7 @@ class MiniPlayer extends React.Component {
                             <Image style={styles.picture} source={{uri: this.props.player.currentSong.picture}}/>
                             <View style={{flex: 1}}>
                                 <Text style={styles.songTitle}>{this.props.player.currentSong.name}</Text>
-                                <Text style={styles.singerName}>{this.props.player.currentSong.singer}</Text>
+                                <Text style={styles.singerName}>{this.props.player.currentSong.singer.name}</Text>
                             </View>
                             <View style={styles.controlArea}>
                                 <TouchableOpacity onPress={() => this._onPlayPausePressed()}>

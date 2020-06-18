@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   Text,
   View,
+  SafeAreaView,
   StyleSheet,
   FlatList,
   ActivityIndicator,
@@ -77,37 +78,40 @@ export default class Search extends React.Component {
     }
     return (
       //ListView to show with textinput used as search bar
-      <View style={styles.viewStyle}>
-        <SearchBar
-          round
-          searchIcon={{ size: 24 }}
-          onChangeText={text => this.SearchFilterFunction(text)}
-          onClear={text => this.SearchFilterFunction('')}
-          placeholder="Type Here..."
-          value={this.state.search}
-          containerStyle = {{ backgroundColor: '#1976D2', height: 65 }}
-          inputContainerStyle={{backgroundColor: 'white', height: 45}}
-        />
-        <FlatList
-          data={this.state.dataSource}
-          ItemSeparatorComponent={this.ListViewItemSeparator}
-          
-          renderItem={({ item }) => (
-            <ListItem
-                leftAvatar={{
-      source: item.picture && { uri: item.picture },
-    }}
-                title={item.name}
-                subtitle={item.singer}
-                containerStyle={{ borderBottomWidth: 2 }}
-              />
+      <React.Fragment>
+        <SafeAreaView style={{backgroundColor: '#0D47A1', paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0}}/>
+        <SafeAreaView style={styles.viewStyle}>
+          <SearchBar
+            round
+            searchIcon={{ size: 24 }}
+            onChangeText={text => this.SearchFilterFunction(text)}
+            onClear={text => this.SearchFilterFunction('')}
+            placeholder="Tìm bài hát"
+            value={this.state.search}
+            containerStyle = {{ backgroundColor: '#1976D2', height: 65 }}
+            inputContainerStyle={{backgroundColor: 'white', height: 45}}
+          />
+          <FlatList
+            data={this.state.dataSource}
+            ItemSeparatorComponent={this.ListViewItemSeparator}
             
-          )}
-          enableEmptySections={true}
-          style={{ marginTop: 10 }}
-          keyExtractor={(item, index) => index.toString()}
-        />
-      </View>
+            renderItem={({ item }) => (
+              <ListItem
+                  leftAvatar={{
+                    source: item.picture && { uri: item.picture },
+                  }}
+                  title={item.name}
+                  subtitle={item.singer}
+                  containerStyle={{ borderBottomWidth: 2 }}
+                />
+              
+            )}
+            enableEmptySections={true}
+            style={{ marginTop: 10 }}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </SafeAreaView>
+      </React.Fragment>
     );
   }
 }
@@ -116,8 +120,7 @@ const styles = StyleSheet.create({
   viewStyle: {
     justifyContent: 'center',
     flex: 1,
-    backgroundColor: 'white',
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
+    backgroundColor: 'white'
   },
  
 });

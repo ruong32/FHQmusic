@@ -49,4 +49,32 @@ function updateSong(state = defaultStatus, action) {
   return state;
 }
 
-export {player, updateSong}
+import { defaultUser } from '../data/data';
+
+function user(state = defaultUser, action) {
+  if (action.type === 'SET_USER'){
+    return {
+      ...state,
+      ...action.user
+    };
+  } else if (action.type === 'ADD_HISTORY') {
+    let existed = false;
+    for(let i = 0; i < state.history.length; i++){
+      if (state.history[i]._id._id === action.song._id){
+        state.history[i].latestListening = action.song.latestListening;
+        existed = true;
+        break;
+      }
+    }
+    if (!existed){
+      state.history.push({
+        _id: action.song,
+        latestListening: action.song.latestListening
+      })
+    }
+    return state
+  }
+  return state;
+}
+
+export {player, updateSong, user}

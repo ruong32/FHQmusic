@@ -6,6 +6,41 @@ import { StyleSheet, Text, View, Image,
 
 
 export default class Register extends Component {
+	state = {
+		username: '',
+		password: '',
+		isRegistering: false,
+		confirmedPassword: '',
+		isConfirmedPassword: true,
+		isAvailable: true
+	}
+
+	register = async () => {
+		if (this.state.password !== this.state.confirmedPassword){
+			this.setState({isConfirmedPassword: false});
+			return;
+		} else {
+			this.setState({isConfirmedPassword: true, isAvailable: true});
+		}
+		if (this.state.username !== '' && this.state.password !== ''){
+			this.setState({isRegistering: true});
+			const response = await fetch(`https://toeic-test-server.herokuapp.com/music/user/register`,{
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({username: this.state.username, password: this.state.password})
+			});
+			const data = await response.json();
+			if (!data){
+				this.setState({isRegistering: false, isAvailable: false})
+			} else {
+				this.props.navigation.navigate("Login");
+			}
+		}
+	}
+
 	render() {
 		const {navigate} = this.props.navigation;
 		return (
@@ -19,10 +54,11 @@ export default class Register extends Component {
 						</View>
 
 						<View style={styles.mid}>
-                            <View>
+                            <View style={{paddingBottom: 5}}>
                                 <Text style={styles.buttonText}>Đăng ký tài khoản</Text>
                             </View>
-
+							{this.state.isAvailable? null : <Text style={{fontSize: 15, color: 'red'}}>Tài khoản đã được sử dụng</Text>}
+							{this.state.isConfirmedPassword? null : <Text style={{fontSize: 15, color: 'red'}}>Mật khẩu phải trùng nhau</Text>}
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
@@ -30,6 +66,7 @@ export default class Register extends Component {
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									textContentType='emailAddress'
 									keyboardType='email-address'
+									onChangeText={text => this.setState({username: text})}
 									returnKeyType='next'
 									onSubmitEditing={()=> this.refs.txtPassword.focus()}>
 								</TextInput>
@@ -43,6 +80,7 @@ export default class Register extends Component {
 									returnKeyType='next'
 									secureTextEntry={true}
 									ref={"txtPassword"}
+									onChangeText={text => this.setState({password: text})}
                                     onSubmitEditing={()=> this.refs.txtPasswordAgain.focus()}>
 								</TextInput>
 							</View>
@@ -52,14 +90,15 @@ export default class Register extends Component {
 									style={styles.input}
 									placeholder="Password again"
 									placeholderTextColor='rgba(0,0,0,0.8)'
+									onChangeText={text => this.setState({confirmedPassword: text})}
 									returnKeyType='go'
 									secureTextEntry={true}
 									ref={"txtPasswordAgain"}>
 								</TextInput>
 							</View>
 
-							<TouchableOpacity style={styles.buttonContainer}>
-								<Text style={styles.buttonText}>Đăng Ký</Text>
+							<TouchableOpacity disabled={this.state.isRegistering} style={styles.buttonContainer} onPress={() => this.register()}>
+								<Text style={styles.buttonText}>{this.state.isRegistering ? "Xin chờ" : "Đăng ký"}</Text>
 							</TouchableOpacity>
 							
 						</View>
@@ -81,7 +120,7 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'center',
 		alignItems: 'stretch',
-		backgroundColor: '#201a27'		
+		backgroundColor: '#4899ea'		
 	},
 	top: {
 		flex: 3,
@@ -111,7 +150,7 @@ const styles = StyleSheet.create({
 	infoContainer: {
 		paddingHorizontal: 10,
 		borderRadius: 10,
-		marginTop: 20,
+		marginTop: 10,
 		backgroundColor: 'white'//a = alpha = opacity
 	},
 	input: {
@@ -126,7 +165,7 @@ const styles = StyleSheet.create({
 		borderRadius:6,
 		justifyContent:'center',
 		alignItems: 'center',
-		marginTop: 20,
+		marginTop: 35,
 
 	},
 	buttonText: {
@@ -147,7 +186,7 @@ const styles = StyleSheet.create({
 	},
 	textbot: {
 		color: "white",
-		margin: 50,
+		marginTop: 65,
 	}
 
 	
