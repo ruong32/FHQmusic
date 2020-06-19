@@ -57,7 +57,7 @@ class Login extends Component {
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Enter your username/email"
+									placeholder="Tên đăng nhập"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									textContentType='emailAddress'
 									keyboardType='email-address'
@@ -70,7 +70,7 @@ class Login extends Component {
 							<View style={styles.infoContainer}>
 								<TextInput 
 									style={styles.input}
-									placeholder="Enter your password"
+									placeholder="Mật khẩu"
 									placeholderTextColor='rgba(0,0,0,0.8)'
 									returnKeyType='go'
 									onChangeText={text => this.setState({password: text})}
